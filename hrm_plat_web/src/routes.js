@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 import Table from './views/nav1/Table.vue'
 import Department from './views/itsource/department.vue'
 import CourseType from './views/course/courseType.vue'
+import Course from './views/course/course.vue'
 import TenantType from './views/tenant/tenantType.vue'
 import Tenant from './views/tenant/tenant.vue'
 import Role from './views/itsource/role.vue'
@@ -61,7 +62,7 @@ let routes = [
         iconCls: 'el-icon-message',//图标样式class
         children: [
             { path: '/courseType', component: CourseType, name: '课程类型' },
-            { path: '/form', component: Table, name: '课程' },
+            { path: '/course', component: Course, name: '课程' },
         ]
     },
     {

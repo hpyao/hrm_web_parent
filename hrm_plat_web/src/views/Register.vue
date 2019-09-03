@@ -17,6 +17,17 @@
       </el-form-item>
       <el-form-item prop="logo" label="机构Logo">
         <el-input type="text" v-model="tenant.logo" auto-complete="off" placeholder="请输入logo！"></el-input>
+        <el-upload
+                class="upload-demo"
+                action="http://localhost:9527/services/fastdfs/fastdfs/upload"
+                :on-success="handleSuccess"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :file-list="fileList"
+                list-type="picture">
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
       </el-form-item>
       <el-form-item prop="adminUser.username" label="机构账号">
         <el-input type="text" v-model="tenant.username" auto-complete="off" placeholder="请输入账号！"></el-input>
@@ -91,7 +102,7 @@
                 keyword:'',
                 dialogVisable:false,
                 // fileList: [{"name":"xxx","http://localhost/"+this.tenant.logo}],
-                fileList: [{name:"xxx",url:"http://localhost/uploads/63f18e2b-0717-4d38-b1d8-b29ab463706f.jpg"}],
+                // fileList: [{name:"xxx",url:"http://localhost/uploads/63f18e2b-0717-4d38-b1d8-b29ab463706f.jpg"}],
                 //tenant:tenant 为了做数据表单校验不要嵌套对象
                 tenant: {
                     companyName: '',
