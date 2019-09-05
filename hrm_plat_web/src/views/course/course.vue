@@ -22,10 +22,10 @@
 					<el-button type="primary">课程阶段</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary">上线</el-button>
+					<el-button type="primary" @click="online" :disabled="this.sels.length===0">上线</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary">下线</el-button>
+					<el-button type="primary" @click="offline" :disabled="this.sels.length===0">下线</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
@@ -34,7 +34,10 @@
     private Long pid;
 
 		-->
-		<el-table :data="courses" v-loading="listLoading" highlight-current-row  style="width: 100%;">
+		<el-table :data="courses" v-loading="listLoading"
+				  highlight-current-row  style="width: 100%;"
+				  @selection-change="selsChange"
+		>
 			<!--多选框-->
 			<el-table-column type="selection" width="55">
 			</el-table-column>
@@ -49,6 +52,12 @@
 			<el-table-column prop="tenantName" label="机构">
 			</el-table-column>
 			<el-table-column prop="userName" label="创建者">
+			</el-table-column>
+			<el-table-column prop="status" label="状态">
+				<template slot-scope="scope">
+					<span v-if="scope.row.status!=null && scope.row.status==0" style="color: red">下线</span>
+					<span v-else>上线</span>
+				</template>
 			</el-table-column>
 			<el-table-column prop="startTime" label="上线时间">
 			</el-table-column>
@@ -86,14 +95,6 @@
 				</el-form-item>
 				<el-form-item label="课程等级" prop="grade">
 					<el-radio-group v-model="course.grade" >
-						<!--从数据字典查询
-						<tr v-for="student in students">
-							<td>{{student.id}}</td>
-							<td>{{student.name}}</td>
-							<td>{{student.age}}</td>
-							<td>{{student.sex}}</td>
-						</tr>
-						-->
 						<el-radio v-for="courseLevel in courseLevels"
 								  :label="courseLevel.id">{{courseLevel.name}}</el-radio>
 					</el-radio-group>
@@ -147,10 +148,66 @@
                     name: [
                         { required: true, message: '请输入名称!', trigger: 'blur' }
                     ]
-                }
+                },
+                sels:[]
 			}
 		},
 		methods: {
+            online(){
+                console.log(this.sels) //是对象数组
+				//map会做遍历,每遍历一次是一个元素,把所有id组装一个数组
+                var ids = this.sels.map(item => item.id);  //[1,2,3]
+                this.$confirm('确认上线选中课程吗？', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.post("/course/course/onLine",ids).then((result) => {
+                        // AjaxResult转换结果
+						if(result.data.success){
+                            this.$message({
+                                message: '操作成功!',
+                                type: 'success'
+                            });
+						}else{
+                            this.$message({
+                                message: result.data.message,
+                                type: 'error'
+                            });
+						}
+                        //刷新数据
+                        this.getCourses();
+                    });
+                }).catch(() => {
+                });
+			},
+            offline(){
+                console.log(this.sels) //是对象数组
+                //map会做遍历,每遍历一次是一个元素,把所有id组装一个数组
+                var ids = this.sels.map(item => item.id);  //[1,2,3]
+                this.$confirm('确认上线选中课程吗？', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.post("/course/course/offLine",ids).then((result) => {
+                        // AjaxResult转换结果
+                        if(result.data.success){
+                            this.$message({
+                                message: '操作成功!',
+                                type: 'success'
+                            });
+                        }else{
+                            this.$message({
+                                message: result.data.message,
+                                type: 'error'
+                            });
+                        }
+                        //刷新数据
+                        this.getCourses();
+                    });
+                }).catch(() => {
+                });
+            },
+            selsChange(sels){
+                this.sels = sels;
+			},
 		    getCourseLevels(){
                 //发送请求到后台获取数据
                 this.$http.get("/sysmanage/systemdictionaryitem/listSn?sn=courseLevel")
