@@ -47,7 +47,7 @@
 			<!--其他都设置值,只有一个不设置值就自动适应了-->
 			<el-table-column prop="name" label="名称">
 			</el-table-column>
-			<el-table-column prop="courseTypeId.name" label="类型">
+			<el-table-column prop="courseType.name" label="类型">
 			</el-table-column>
 			<el-table-column prop="tenantName" label="机构">
 			</el-table-column>
@@ -100,7 +100,11 @@
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="课程类型" prop="courseTypeId">
-					<el-input v-model="course.courseTypeId" auto-complete="off"></el-input>
+					<!--<el-input v-model="course.courseTypeId" auto-complete="off"></el-input>-->
+					<el-cascader v-model="course.courseTypeId"
+							:options="typeTree"
+							:props="{ checkStrictly: true,value:'id',label:'name'}"
+							clearable></el-cascader>
 				</el-form-item>
 				<el-form-item label="简介" prop="intro">
 					<el-input v-model="course.detail.intro" auto-complete="off"></el-input>
@@ -144,6 +148,7 @@
 					}
 				},
 				employees:[],
+                typeTree:[],
                 formRules: {
                     name: [
                         { required: true, message: '请输入名称!', trigger: 'blur' }
@@ -153,6 +158,13 @@
 			}
 		},
 		methods: {
+            getTypeTree(){
+                //分页查询
+                this.$http.get("/course/courseType/treeData") //$.Post(.....)
+                    .then(result=>{
+                        this.typeTree = result.data;
+                    });
+			},
             online(){
                 console.log(this.sels) //是对象数组
 				//map会做遍历,每遍历一次是一个元素,把所有id组装一个数组
@@ -232,6 +244,7 @@
 				//打开dialog
 				this.formVisible =true;
 				this.getCourseLevels();
+				this.getTypeTree();
 			},
             stateFormatter(row, column, cellValue, index){
 
@@ -252,6 +265,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             //拷贝后面对象的值到新对象,防止后面代码改动引起模型变化
                             let para = Object.assign({}, this.course);
+                            para.courseTypeId = para.courseTypeId[para.courseTypeId.length-1] //这是一个垃圾
                             //判断是否有id有就是修改,否则就是添加
 							this.$http.post("/course/course/save",para).then((res) => {
 								this.$message({
@@ -276,6 +290,7 @@
 				//显示
                 this.formVisible =true;
                 this.getCourseLevels();
+                this.getTypeTree();
 			}
 		    ,
             getCourses(){
