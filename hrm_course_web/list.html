@@ -1,0 +1,4399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>爱购网 - 购我所爱 I LOVE BUY</title>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- 网站头像 -->
+		<link type="text/css" rel="stylesheet" href="css/iconfont.css">
+		<link type="text/css" rel="stylesheet" href="css/common.css">
+		<!--整站改色 _start-->
+		<link type="text/css" rel="stylesheet" href="css/color-style.css">
+		<!--整站改色 _end-->
+		<link rel="stylesheet" href="css/layer.css" id="layuicss-skinlayercss">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/layer.js"></script>
+		<script type="text/javascript" src="js/jquery.method.js"></script>
+		<script type="text/javascript" src="js/jquery.modal.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<!-- 图片缓载js -->
+		<script type="text/javascript" src="js/jquery.lazyload.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// 搜索框提示显示
+				$('.SZY-SEARCH-BOX .SZY-SEARCH-BOX-KEYWORD').focus(function() {
+					$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-HELPER").show();
+				});
+				// 搜索框提示隐藏
+				$(".SZY-SEARCH-BOX-HELPER .close").on('click', function() {
+					$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-HELPER").hide();
+				});
+				// 清除记录
+				$(".SZY-SEARCH-BOX-HELPER .clear").click(function() {
+					var url = '/search/clear-record.html';
+					$.post(url, {}, function(result) {
+						if(result.code == 0) {
+							$(".history-results .active").empty();
+						} else {}
+					}, 'json');
+				});
+
+				$(".SZY-SEARCH-BOX-TOP .SZY-SEARCH-BOX-SUBMIT-TOP").click(function() {
+					if($(".search-li-top.curr").attr('num') == 0) {
+						var keyword_obj = $(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-KEYWORD");
+
+						var keywords = $(keyword_obj).val();
+						if($.trim(keywords).length == 0 || $.trim(keywords) == "请输入关键词") {
+							keywords = $(keyword_obj).data("searchwords");
+						}
+						$(keyword_obj).val(keywords);
+					}
+					$(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-FORM").submit();
+				});
+
+				$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-SUBMIT").click(function() {
+					if($(".search-li.curr").attr('num') == 0) {
+						var keyword_obj = $(this).parents(".SZY-SEARCH-BOX").find(".SZY-SEARCH-BOX-KEYWORD");
+
+						var keywords = $(keyword_obj).val();
+						if($.trim(keywords).length == 0 || $.trim(keywords) == "请输入关键词") {
+							keywords = $(keyword_obj).data("searchwords");
+						}
+						$(keyword_obj).val(keywords);
+					}
+					$(this).parents(".SZY-SEARCH-BOX").find(".SZY-SEARCH-BOX-FORM").submit();
+				});
+			});
+
+			function search_box_remove(key) {
+				var url = '/search/delete-record.html';
+				$.post(url, {
+					data: key
+				}, function(result) {
+					if(result.code == 0) {
+						$("#" + key).css("display", "none");
+					} else {
+
+					}
+				}, 'json');
+			}
+			$(document).on("click", function(e) {
+				var target = $(e.target);
+				if(target.closest(".SZY-SEARCH-BOX").length == 0) {
+					$('.SZY-SEARCH-BOX-HELPER').hide();
+				}
+			});
+		</script>
+	</head>
+
+	<body class="pace-done">
+
+		<!-- 站点选择 -->
+		<div class="header-top">
+			<div class="header-box">
+
+				<!-- 站点 -->
+				<!--站点 start-->
+				<div class="SZY-SUBSITE">
+
+				</div>
+				<!--站点 end-->
+				<font id="login-info" class="login-info SZY-USER-NOT-LOGIN">
+					<a class="login color" href="login.html" target="_top">请登录</a>
+					<a class="register" href="register.html" target="_top">免费注册</a>
+				</font>
+				<font id="login-info" class="login-info SZY-USER-ALREADY-LOGIN" style="display: none;">
+					<em>
+		<a href="user.html" target="_blank" class="color SZY-USER-NAME"></a>
+		<!--欢迎您回来!-->
+	</em>
+					<a href="site/logout" data-method="post">退出</a>
+				</font>
+
+				<ul>
+					<li>
+						<a class="menu-hd home" href="" target="_top">
+							<i></i> 爱购首页
+						</a>
+					</li>
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd myinfo" href="user.html" target="_blank">
+								<i></i> 会员中心
+								<b></b>
+							</a>
+							<div id="menu-2" class="menu-bd" style="display: none;">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<a href="user/order.html" target="_blank">我的宝贝</a>
+									<a href="user/address.html" target="_blank">我的地址</a>
+									<a href="user/collect/goods.html" target="_blank">我的收藏</a>
+									<a href="user/collect/shop.html" target="_blank">关注店铺</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="menu-item cartbox">
+						<div class="menu">
+							<a class="menu-hd cart" href="cart.html" target="_top">
+								<i></i> 购物车
+								<span class="SZY-CART-COUNT">0</span>
+								<b></b>
+							</a>
+							<div id="menu-4" class="menu-bd cart-box-main">
+								<span class="menu-bd-mask"></span>
+								<div class="dropdown-layer">
+									<div class="spacer"></div>
+									<div class="dropdown-layer-con cartbox-goods-list">
+
+										<!-- 正在加载 -->
+										<div class="cart-type">
+											<i class="cart-type-icon"></i>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd we-chat" href="" target="_top">
+								<i></i> 关注爱购
+								<b></b>
+							</a>
+							<div id="menu-5" class="menu-bd we-chat-qrcode">
+								<span class="menu-bd-mask"></span>
+								<a target="_top">
+									<img src="img/test/mall_wx_qrcode_0.jpg" alt="官方微信">
+								</a>
+								<p class="font-14">关注官方微信</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a href="" class="menu-hd site-nav" target="_blank">
+								更多支持
+								<b></b>
+							</a>
+							<div id="menu-7" class="menu-bd site-nav-main">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<div class="site-nav-con">
+
+										<a href="article/info?id=38" target="_blank" title="新手上路">新手上路</a>
+
+										<a href="article/info?id=38" target="_blank" title="支付方式">支付方式</a>
+
+										<a href="article/list/3.html" target="_blank" title="配送服务">配送服务</a>
+
+										<a href="article/list/4.html" target="_blank" title="售后服务">售后服务</a>
+
+										<a href="article/info?id=38" target="_blank" title="商家合作">商家合作</a>
+
+										<a href="list.html?cat_id=17" target="_blank" title="店铺街">店铺街</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="header">
+			<div class="w1210">
+				<div class="logo-info">
+					<a href="/" class="logo">
+						<img src="img/test/mall_logo_0.png">
+					</a>
+
+					<!-- logo右侧小广告 _start -->
+					<a href="#" class="logo-right">
+						<img src="img/test/mall_logo_right_ad_image_0.png">
+					</a>
+					<!-- logo右侧小广告 _end -->
+
+				</div>
+				<div class="search SZY-SEARCH-BOX">
+					<form class="search-form SZY-SEARCH-BOX-FORM" method="get" action="search.html">
+						<div class="search-info">
+							<div class="search-type-box">
+								<ul class="search-type">
+									<li class="search-li curr" num="0">商品</li>
+									<li class="search-li" num="1">店铺</li>
+								</ul>
+								<i></i>
+							</div>
+							<div class="search-box">
+								<div class="search-box-con">
+									<input type="text" class="keyword search-box-input SZY-SEARCH-BOX-KEYWORD" name="keyword" tabindex="9" autocomplete="off" data-searchwords="特价商品" placeholder="搜索特价商品" value="">
+								</div>
+							</div>
+							<input type="hidden" id="searchtype" name="type" value="0" class="searchtype">
+							<button id="btn_search_box_submit" class="button bg-color btn_search_box_submit SZY-SEARCH-BOX-SUBMIT"></button>
+						</div>
+						<!---热门搜索热搜词显示--->
+
+						<div class="search-results hide SZY-SEARCH-BOX-HELPER">
+							<ul class="history-results">
+								<li class="title">
+									<span>最近搜索</span>
+									<a href="javascript:void(0);" class="clear-history clear">
+										<i></i> 清空
+									</a>
+								</li>
+								<!---->
+							</ul>
+							<ul class="rec-results">
+								<li class="title">
+									<span>正在热搜中</span>
+									<i class="close"></i>
+								</li>
+
+								<li>
+									<a target="_blank" href="#">毛呢大衣</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="#">9.9包邮</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="#">iphone</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="#">特价</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="#">充电宝</a>
+								</li>
+
+							</ul>
+						</div>
+					</form>
+					<ul class="hot-query">
+						<!-- 默认搜索词 -->
+
+						<li class="first">
+							<a href="#">牛仔裤</a>
+						</li>
+
+						<li>
+							<a href="#">POLO衫</a>
+						</li>
+
+						<li>
+							<a href="#">单鞋</a>
+						</li>
+
+						<li>
+							<a href="#">ThinkPAD</a>
+						</li>
+
+						<li>
+							<a href="#">小米6</a>
+						</li>
+
+						<li>
+							<a href="#">华为MATE9</a>
+						</li>
+
+						<li>
+							<a href="#">你懂得</a>
+						</li>
+
+						<li>
+							<a href="#">你懂得</a>
+						</li>
+
+					</ul>
+				</div>
+
+				<!-- 搜索框右侧小广告 _start -->
+
+				<div class="header-right">
+					<a href="#" title="">
+						<img src="img/test/mall_search_right_ad_image_0.png">
+					</a>
+				</div>
+
+				<!-- 搜索框右侧小广告 _end -->
+
+			</div>
+		</div>
+
+		<!-- 站点导航 -->
+		<!-- 判断url链接 -->
+		<div class="category-box category-box-border">
+			<div class="w1210">
+				<div class="home-category fl">
+					<a href="http://www.itsource.cn/category.html" class="menu-event" title="查看全部商品分类">
+						<i></i> 全部商品分类
+					</a>
+					<div class="expand-menu category-layer">
+						<span class="category-layer-bg bg-color"></span>
+					</div>
+				</div>
+
+				<div class="all-category fl" id="nav">
+					<ul>
+
+						<li class="fl">
+							<a class="nav current" href="/" target="_blank" title="首页">首页</a>
+							<!-- 导航小标签 _start -->
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fl">
+							<a class="nav " href="#" target="_blank" title="爱购团">爱购团</a>
+							<!-- 导航小标签 _start -->
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fl">
+							<a class="nav " href="#" target="_blank" title="海外购">海外购</a>
+							<!-- 导航小标签 _start -->
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fl">
+							<a class="nav " href="#" target="_blank" title="品牌馆">品牌馆</a>
+							<!-- 导航小标签 _start -->
+
+							<span class="nav-icon">
+						<img src="img/test/14766722355540.gif">
+					</span>
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fl">
+							<a class="nav " href="#" target="_blank" title="美妆馆">美妆馆</a>
+							<!-- 导航小标签 _start -->
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fr">
+							<a class="nav " href="#" target="_blank" title="帮助中心">帮助中心</a>
+							<!-- 导航小标签 _start -->
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fr">
+							<a class="nav " href="#" target="_blank" title="商家合作">商家合作</a>
+							<!-- 导航小标签 _start -->
+
+							<span class="nav-icon">
+						<img src="img/test/14766722553394.gif">
+					</span>
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+						<li class="fl">
+							<a class="nav " href="#" target="_blank" title="一折限量专区">抢购专区</a>
+							<!-- 导航小标签 _start -->
+
+							<span class="nav-icon">
+						<img src="img/test/14794053929710.gif">
+					</span>
+
+							<!-- 导航小标签 _end -->
+						</li>
+
+					</ul>
+					<div class="wrap-line" style="left: 0px; width: 72px;">
+						<span style="left: 15px;"></span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- 开始：主要区域内容 -->
+		<!-- css -->
+		<link type="text/css" rel="stylesheet" href="css/category.css">
+		<!-- 占位符 -->
+		<script type="text/javascript">
+			var begin_hidden = 0;
+
+			function Show_More_Attrgroup() {
+				if(begin_hidden == 0) {
+					$(".filter-attr").each(function(i) {
+						$(this).show();
+					});
+					$('#attr-group-more-text').html("收起");
+					begin_hidden = 2;
+				} else {
+					$(".filter-attr").each(function(i) {
+						if(i >= begin_hidden) {
+							$(this).hide();
+						} else {
+							$(this).show();
+						}
+					});
+					$('#attr-group-more-text').html("更多选项");
+					begin_hidden = 0;
+				}
+
+				var kuan1 = $("#attr-list-ul").width();
+				var kuan2 = $("#attr-group-more").width();
+				var kuan = (kuan1 - kuan2) / 2;
+				$('#attr-group-more').css("margin-left", kuan + "px");
+			}
+
+			// 是否显示“更多”__初始化
+			function init_more(boxid, moreid, height) {
+				var obj_brand = document.getElementById(boxid);
+				var more_brand = document.getElementById(moreid);
+				if(obj_brand.clientHeight > height) {
+					obj_brand.style.height = height + "px";
+					obj_brand.style.overflow = "hidden";
+					more_brand.innerHTML = '<a href="javascript:void(0);"  onclick="slideDiv(this, \'' + boxid + '\', \'' + height + '\');" class="more" >更多</a>';
+				}
+			}
+			// 收起
+			function slideDiv(thisobj, divID, Height) {
+				var obj = document.getElementById(divID).style;
+				if(obj.height == "") {
+					obj.height = Height + "px";
+					obj.overflow = "hidden";
+					thisobj.innerHTML = "更多";
+					thisobj.className = "more";
+					// 如果是品牌，额外处理
+					if(divID == 'brand-abox') {
+						// obj.width="456px";
+						getBrand_By_Zimu(document.getElementById('brand-zimu-all'), '');
+						document.getElementById('brand-sobox').style.display = "none";
+						document.getElementById('brand-zimu').style.display = "none";
+						document.getElementById('brand-abox-father').className = "";
+					}
+				} else {
+					obj.height = "";
+					obj.overflow = "";
+					thisobj.innerHTML = "收起";
+					thisobj.className = "more opened";
+					// 如果是品牌，额外处理
+					if(divID == 'brand-abox') {
+						// obj.width="456px";
+						document.getElementById('brand-sobox').style.display = "block";
+						document.getElementById('brand-zimu').style.display = "block";
+						// getBrand_By_Zimu(document.getElementById('brand-zimu-all'),'');
+						document.getElementById('brand-abox-father').className = "brand-more";
+					}
+				}
+			}
+
+			function getBrand_By_Name(val) {
+				val = val.toLocaleLowerCase();
+				var brand_list = document.getElementById('brand-abox').getElementsByTagName('li');
+				for(var i = 0; i < brand_list.length; i++) {
+					// document.getElementById('brand-abox').style.width="auto";
+					var name_attr_value = brand_list[i].getAttribute("name").toLocaleLowerCase();
+					if(brand_list[i].title.indexOf(val) == 0 || name_attr_value.indexOf(val) == 0 || val == '') {
+						brand_list[i].style.display = 'block';
+					} else {
+						brand_list[i].style.display = 'none';
+					}
+				}
+			}
+			// 点击字母切换品牌
+			function getBrand_By_Zimu(obj, zimu) {
+				document.getElementById('brand-sobox-input').value = "可搜索拼音、汉字查找品牌";
+				obj.focus();
+				var brand_zimu = document.getElementById('brand-zimu');
+				var zimu_span_list = brand_zimu.getElementsByTagName('span');
+				for(var i = 0; i < zimu_span_list.length; i++) {
+					zimu_span_list[i].className = '';
+				}
+				var thisspan = obj.parentNode;
+				thisspan.className = 'span';
+				var brand_list = document.getElementById('brand-abox').getElementsByTagName('li');
+				for(var i = 0; i < brand_list.length; i++) {
+					// document.getElementById('brand-abox').style.width="auto";
+					if(brand_list[i].getAttribute('rel') == zimu || zimu == '') {
+						brand_list[i].style.display = 'block';
+					} else {
+						brand_list[i].style.display = 'none';
+					}
+				}
+			}
+			var duoxuan_a_valid = new Array();
+			// 点击多选， 显示多选区
+			function showDuoXuan(dx_divid, a_valid_id) {
+				var dx_dl_div = document.getElementById('attr-list-ul').getElementsByTagName('dl');
+				for(var i = 0; i < dx_dl_div.length; i++) {
+					dx_dl_div[i].className = '';
+					//dx_dl_div[0].className = 'selected-attr-dl';
+				}
+				var dxDiv = document.getElementById(dx_divid);
+				dxDiv.className = "duoxuan";
+				duoxuan_a_valid[a_valid_id] = 1;
+
+			}
+
+			function hiddenDuoXuan(dx_divid, a_valid_id) {
+				var dxDiv = document.getElementById(dx_divid);
+				dxDiv.className = "";
+				duoxuan_a_valid[a_valid_id] = 0;
+				if(a_valid_id == 'brand') {
+					var ul_obj_div = document.getElementById('brand-abox');
+					var li_list_div = ul_obj_div.getElementsByTagName('li');
+					if(li_list_div) {
+						for(var j = 0; j < li_list_div.length; j++) {
+							li_list_div[j].className = "";
+						}
+					}
+				} else {
+					var ul_obj_div = document.getElementById('attr-abox-' + a_valid_id);
+				}
+				var input_list = ul_obj_div.getElementsByTagName('input');
+				var span_list = ul_obj_div.getElementsByTagName('span');
+				for(var j = 0; j < input_list.length; j++) {
+					input_list[j].checked = false;
+				}
+				if(span_list.length) {
+					for(var j = 0; j < span_list.length; j++) {
+						span_list[j].className = "";
+					}
+				}
+			}
+
+			function duoxuan_Onclick(a_valid_id, idid, thisobj) {
+				if(duoxuan_a_valid[a_valid_id]) {
+					if(thisobj) {
+						var fatherObj = thisobj.parentNode;
+						if(a_valid_id == "brand") {
+							fatherObj.className = fatherObj.className == "brand-seled" ? "" : "brand-seled";
+						} else {
+							fatherObj.className = fatherObj.className == "" ? "selected" : "";
+						}
+					}
+					document.getElementById('chk-' + a_valid_id + '-' + idid).checked = !document.getElementById('chk-' + a_valid_id + '-' + idid).checked;
+					return false;
+				}
+			}
+
+			function duoxuan_Submit(dxid, indexid, url) {
+
+				var theForm = document.forms['theForm'];
+				var chklist = theForm.elements['checkbox_' + dxid + '[]'];
+				var value = "";
+				var mm = 0;
+
+				for(var k = 0; k < chklist.length; k++) {
+					if(chklist[k].checked) {
+						value += mm > 0 ? "_" : "";
+						value += chklist[k].value;
+						mm++;
+					}
+				}
+
+				if(mm == 0) {
+					return false;
+				}
+
+				if(dxid == 'brand') {
+					url = url.replace("{0}", value);
+				} else {
+					url = url.replace("{0}", value);
+				}
+
+				$.go(url);
+			}
+
+			//自定义价格
+			function setPrice(url) {
+				var max = $('#price_max').val();
+				var min = $('#price_min').val();
+				if(max > 0 & min >= 0) {
+					var url = url.replace("{0}", min).replace("{1}", max);
+				} else {
+					var url = url.replace("{0}", 0).replace("{1}", 0);
+				}
+				$.go(url);
+			}
+		</script>
+		<!-- 缓载图片 -->
+		<div class="blank"></div>
+		<div class="w1210">
+			<!--热卖推荐-->
+
+			<div id="hotsale">
+				<div class="hd bg-color">热卖推荐</div>
+				<div class="mc">
+
+					<dl>
+						<dt>
+					<a target="_blank" href="http://www.itsource.cn/goods-4.html" title="加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季" style="background: url({ imageurl($ lazyload_image)">
+						<img src="img/test/14788784646707.jpg" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/11/14788784646707.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" alt="" style="display: inline;">
+					</a>
+				</dt>
+						<dd>
+							<div class="p-name">
+								<a target="_blank" href="http://www.itsource.cn/goods-4.html" title="加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季">加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季</a>
+							</div>
+							<div class="p-price">
+								特价：
+								<font class="shop-price second-color"> ￥29.50 </font>
+							</div>
+							<div class="btns">
+								<a target="_blank" href="http://www.itsource.cn/goods-4.html" class="bg-color">查看详情</a>
+							</div>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt>
+					<a target="_blank" href="http://www.itsource.cn/goods-7.html" title="浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤" style="background: url({ imageurl($ lazyload_image)">
+						<img src="img/test/14789657995869.png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789657995869.png?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" alt="" style="display: inline;">
+					</a>
+				</dt>
+						<dd>
+							<div class="p-name">
+								<a target="_blank" href="http://www.itsource.cn/goods-7.html" title="浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤">浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤</a>
+							</div>
+							<div class="p-price">
+								特价：
+								<font class="shop-price second-color"> ￥29.90 </font>
+							</div>
+							<div class="btns">
+								<a target="_blank" href="http://www.itsource.cn/goods-7.html" class="bg-color">查看详情</a>
+							</div>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt>
+					<a target="_blank" href="http://www.itsource.cn/goods-9.html" title="紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子" style="background: url({ imageurl($ lazyload_image)">
+						<img src="img/test/14789669544048.png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789669544048.png?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" alt="" style="display: inline;">
+					</a>
+				</dt>
+						<dd>
+							<div class="p-name">
+								<a target="_blank" href="http://www.itsource.cn/goods-9.html" title="紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子">紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子</a>
+							</div>
+							<div class="p-price">
+								特价：
+								<font class="shop-price second-color"> ￥15.90 </font>
+							</div>
+							<div class="btns">
+								<a target="_blank" href="http://www.itsource.cn/goods-9.html" class="bg-color">查看详情</a>
+							</div>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt>
+					<a target="_blank" href="http://www.itsource.cn/goods-10.html" title="加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜" style="background: url({ imageurl($ lazyload_image)">
+						<img src="img/test/14789686200823.png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789686200823.png?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" alt="" style="display: inline;">
+					</a>
+				</dt>
+						<dd>
+							<div class="p-name">
+								<a target="_blank" href="http://www.itsource.cn/goods-10.html" title="加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜">加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜</a>
+							</div>
+							<div class="p-price">
+								特价：
+								<font class="shop-price second-color"> ￥28.80 </font>
+							</div>
+							<div class="btns">
+								<a target="_blank" href="http://www.itsource.cn/goods-10.html" class="bg-color">查看详情</a>
+							</div>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+
+			<!--当前位置，面包屑-->
+			<div class="breadcrumb clearfix">
+				<a href="http://www.itsource.cn/" class="index">首页</a>
+
+				<span class="crumbs-arrow">&gt;</span>
+
+				<div class="crumbs-nav crumbs-nav0">
+					<a class="crumbs-title" href="http://www.itsource.cn/list.html?cat_id=27">
+						服装内衣专区男装/女装/童装/内衣
+						<i class="icon"></i>
+					</a>
+					<div class="crumbs-drop">
+						<ul class="crumbs-drop-list">
+
+							<li>
+								<a href="http://www.itsource.cn/list-1925.html">一折限量区</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1.html">特价商品类</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-36.html">化妆护理宠物化妆/护理/清洁/宠物</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-37.html">鞋包珠宝类</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-295.html">潮流尖货类</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1050.html">母婴/玩具乐器</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1053.html">食品/酒类/生鲜/特产</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1054.html">医药保健</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-299.html">宅男宅女区</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1407.html">图书/影像/电子书</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1408.html">彩票/旅行/票务/充值</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-1409.html">理财/众筹/白条/保险</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-436.html">家用电器</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-437.html">手机/运营商/数码</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-438.html">电脑办公</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-720.html">家居/家具/家装/厨具</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-721.html">运动/户外/钟表</a>
+							</li>
+
+							<li>
+								<a href="http://www.itsource.cn/list-722.html">汽车/汽车用品</a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+
+				<!-- <div class="crumbs-nav">
+		<span class="crumbs-search">
+						<form id="1484876051a6FW9i" class="current-search-form" method="get" action="/list">
+				<input type="text" value="在当前分类下搜索" name="keyword" class="search-term" />
+				<input type="button" class="search-button" />
+			</form>
+		</span>
+	</div> -->
+				<script type="text/javascript">
+					$().ready(function() {
+						$("#1484876051a6FW9i").find(".search-button").click(function() {
+							var keyword = $("#1484876051a6FW9i").find("[name='keyword']").val();
+
+							var url = "/list.html?cat_id=27&amp;go=1&amp;sort=1&amp;order=DESC&amp;style=grid&amp;region=51_01&amp;keyword={0}";
+							url = url.replace(/&amp;/g, "&");
+
+							if($.trim(keyword) == '在当前分类下搜索') {
+								url = url.replace("{0}", "");
+							} else {
+								url = url.replace("{0}", $.trim(keyword));
+							}
+
+							$.go(url);
+						});
+						$("#1484876051a6FW9i").find("[name='keyword']").click(function() {
+							if($(this).val() == '在当前分类下搜索') {
+								$(this).val("");
+							}
+						});
+					});
+				</script>
+
+			</div>
+
+			<form action="http://www.itsource.cn/list-27-1-0-0-0-0-0-1-3-51_01-0.html" method="post" name="theForm">
+				<!--筛选条件-->
+				<div class="search-wrap" id="attr-list-ul" style="border-top: none;">
+					<!--已选条件-->
+					<!-- -->
+					<!--品牌-->
+
+					<dl class="" id="attr-group-dl-brand">
+						<dt>品牌：</dt>
+						<dd class="moredd">
+							<label id="brand-more"><a href="javascript:void(0);" onclick="slideDiv(this, &#39;brand-abox&#39;, &#39;83&#39;);" class="more">更多</a></label>
+							<label>
+						<a href="javascript:void(0)" class="multiple" onclick="showDuoXuan(&#39;attr-group-dl-brand&#39;,&#39;brand&#39;);">
+							<font class="duo-b">+</font>
+							多选
+						</a>
+					</label>
+						</dd>
+						<dd>
+							<div id="brand-sobox" style="display: none;">
+								<input id="brand-sobox-input" value="可搜索拼音、汉字查找品牌" type="text" onkeyup="getBrand_By_Name(this.value);">
+							</div>
+							<div id="brand-zimu" class="clearfix" style="display: none;">
+								<span class="span">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;&#39;)" id="brand-zimu-all">所有品牌</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;&#39;)"></a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;5&#39;)">5</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;A&#39;)">A</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;B&#39;)">B</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;C&#39;)">C</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;D&#39;)">D</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;G&#39;)">G</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;H&#39;)">H</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;I&#39;)">I</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;J&#39;)">J</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;L&#39;)">L</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;M&#39;)">M</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;N&#39;)">N</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;O&#39;)">O</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;P&#39;)">P</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;Q&#39;)">Q</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;R&#39;)">R</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;S&#39;)">S</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;T&#39;)">T</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;V&#39;)">V</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;W&#39;)">W</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;X&#39;)">X</a>
+							<b></b>
+						</span>
+
+								<span class="">
+							<a href="javascript:void(0);" onmouseover="getBrand_By_Zimu(this,&#39;Y&#39;)">Y</a>
+							<b></b>
+						</span>
+
+							</div>
+							<div id="brand-abox-father" class="">
+								<ul id="brand-abox" class="brand-abox-imgul" style="height: 83px; overflow: hidden;">
+									<!--品牌选中状态为brand-seled样式-->
+
+									<li class="brand" title="591GGG" rel="" name="" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-1" value="65">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-65.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;1&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											591GGG
+											<span class="color">591GGG</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="1989" rel="" name="" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-2" value="100">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-100.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;2&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											1989
+											<span class="color">1989</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="PANMAX/潘·麦克斯" rel="" name="" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-3" value="102">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-102.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;3&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											PANMAX/潘·麦克斯
+											<span class="color">PANMAX/潘·麦克斯</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="1010" rel="" name="" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-4" value="106">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-106.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;4&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											1010
+											<span class="color">1010</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="5I" rel="5" name="5" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-5" value="103">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-103.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;5&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											5I
+											<span class="color">5I</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Afs Jeep/战地吉普" rel="A" name="A" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-6" value="86">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-86.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;6&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Afs Jeep/战地吉普
+											<span class="color">Afs Jeep/战地吉普</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="ACEG" rel="A" name="A" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-7" value="101">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-101.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;7&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											ACEG
+											<span class="color">ACEG</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="A21" rel="A" name="A" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-8" value="166">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-166.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;8&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											A21
+											<span class="color">A21</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="宝财羊" rel="B" name="B" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-9" value="69">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-69.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;9&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											宝财羊
+											<span class="color">宝财羊</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Bradiwill/班迪维" rel="B" name="B" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-10" value="92">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-92.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;10&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Bradiwill/班迪维
+											<span class="color">Bradiwill/班迪维</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Collocation" rel="C" name="C" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-11" value="56">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-56.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;11&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Collocation
+											<span class="color">Collocation</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="CalifDeer/加洲鹿" rel="C" name="C" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-12" value="64">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-64.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;12&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											CalifDeer/加洲鹿
+											<span class="color">CalifDeer/加洲鹿</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="DAFUSHEEP/大富羊" rel="D" name="D" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-13" value="79">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-79.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;13&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											DAFUSHEEP/大富羊
+											<span class="color">DAFUSHEEP/大富羊</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="敦路利" rel="D" name="D" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-14" value="80">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-80.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;14&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											敦路利
+											<span class="color">敦路利</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="大依优型" rel="D" name="D" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-15" value="95">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-95.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;15&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											大依优型
+											<span class="color">大依优型</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="工彩唯懿" rel="G" name="G" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-16" value="170">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-170.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;16&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											工彩唯懿
+											<span class="color">工彩唯懿</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="HENL/轩纳利" rel="H" name="H" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-17" value="81">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-81.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;17&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											HENL/轩纳利
+											<span class="color">HENL/轩纳利</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="IKOPPOI" rel="I" name="I" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-18" value="55">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-55.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;18&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											IKOPPOI
+											<span class="color">IKOPPOI</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="健力爽" rel="J" name="J" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-19" value="50">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-50.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;19&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											健力爽
+											<span class="color">健力爽</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="JAZZCOOL/轩衣酷" rel="J" name="J" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-20" value="51">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-51.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;20&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											JAZZCOOL/轩衣酷
+											<span class="color">JAZZCOOL/轩衣酷</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="jovong/灼煌" rel="J" name="J" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-21" value="96">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-96.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;21&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											jovong/灼煌
+											<span class="color">jovong/灼煌</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="金狐狸" rel="J" name="J" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-22" value="155">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-155.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;22&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											金狐狸
+											<span class="color">金狐狸</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="龙霸E族" rel="L" name="L" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-23" value="66">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-66.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;23&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											龙霸E族
+											<span class="color">龙霸E族</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="劳狮劳仑" rel="L" name="L" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-24" value="67">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-67.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;24&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											劳狮劳仑
+											<span class="color">劳狮劳仑</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="雷哈格尔" rel="L" name="L" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-25" value="87">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-87.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;25&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											雷哈格尔
+											<span class="color">雷哈格尔</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="LSDZW/雷萨顿威" rel="L" name="L" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-26" value="97">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-97.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;26&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											LSDZW/雷萨顿威
+											<span class="color">LSDZW/雷萨顿威</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="漠爵" rel="M" name="M" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-27" value="70">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-70.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;27&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											漠爵
+											<span class="color">漠爵</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="MR．WOLF/狼先生" rel="M" name="M" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-28" value="77">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-77.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;28&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											MR．WOLF/狼先生
+											<span class="color">MR．WOLF/狼先生</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="梦梵莎" rel="M" name="M" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-29" value="83">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-83.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;29&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											梦梵莎
+											<span class="color">梦梵莎</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="MINDUHORSE/名度马" rel="M" name="M" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-30" value="94">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-94.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;30&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											MINDUHORSE/名度马
+											<span class="color">MINDUHORSE/名度马</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="迈拉伦蒂" rel="M" name="M" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-31" value="167">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-167.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;31&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											迈拉伦蒂
+											<span class="color">迈拉伦蒂</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="NOVEDENG/蓝威登" rel="N" name="N" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-32" value="68">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-68.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;32&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											NOVEDENG/蓝威登
+											<span class="color">NOVEDENG/蓝威登</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="NANMO/默楠" rel="N" name="N" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-33" value="105">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-105.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;33&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											NANMO/默楠
+											<span class="color">NANMO/默楠</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="other/其他" rel="O" name="O" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-34" value="16">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-16.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;34&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											other/其他
+											<span class="color">other/其他</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Pg/派斯吉" rel="P" name="P" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-35" value="54">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-54.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;35&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Pg/派斯吉
+											<span class="color">Pg/派斯吉</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Pierre Cardin/皮尔卡丹" rel="P" name="P" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-36" value="107">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-107.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;36&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Pierre Cardin/皮尔卡丹
+											<span class="color">Pierre Cardin/皮尔卡丹</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="PLAYBOY/花花公子" rel="P" name="P" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-37" value="109">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-109.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;37&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											PLAYBOY/花花公子
+											<span class="color">PLAYBOY/花花公子</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="其它/other" rel="Q" name="Q" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-38" value="25">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-25.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;38&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											其它/other
+											<span class="color">其它/other</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="其他/other" rel="Q" name="Q" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-39" value="60">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-60.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;39&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											其他/other
+											<span class="color">其他/other</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="权威龙" rel="Q" name="Q" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-40" value="78">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-78.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;40&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											权威龙
+											<span class="color">权威龙</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="青藏牧王" rel="Q" name="Q" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-41" value="108">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-108.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;41&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											青藏牧王
+											<span class="color">青藏牧王</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="情缘挚美" rel="Q" name="Q" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-42" value="169">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-169.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;42&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											情缘挚美
+											<span class="color">情缘挚美</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="绒美琪" rel="R" name="R" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-43" value="104">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-104.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;43&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											绒美琪
+											<span class="color">绒美琪</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Shark Walk World/鲨行天下" rel="S" name="S" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-44" value="91">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-91.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;44&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Shark Walk World/鲨行天下
+											<span class="color">Shark Walk World/鲨行天下</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="TIDEWORD/潮言" rel="T" name="T" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-45" value="98">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-98.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;45&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											TIDEWORD/潮言
+											<span class="color">TIDEWORD/潮言</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="THE PANG" rel="T" name="T" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-46" value="99">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-99.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;46&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											THE PANG
+											<span class="color">THE PANG</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="TAIPINGGANG/太平港" rel="T" name="T" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-47" value="168">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-168.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;47&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											TAIPINGGANG/太平港
+											<span class="color">TAIPINGGANG/太平港</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="VENIKALO/维妮卡洛" rel="V" name="V" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-48" value="52">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-52.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;48&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											VENIKALO/维妮卡洛
+											<span class="color">VENIKALO/维妮卡洛</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="威登俊虎" rel="W" name="W" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-49" value="82">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-82.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;49&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											威登俊虎
+											<span class="color">威登俊虎</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="伟臣" rel="W" name="W" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-50" value="89">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-89.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;50&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											伟臣
+											<span class="color">伟臣</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="Waynexzavier/韦恩泽维尔" rel="W" name="W" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-51" value="90">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-90.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;51&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											Waynexzavier/韦恩泽维尔
+											<span class="color">Waynexzavier/韦恩泽维尔</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="文艺男" rel="W" name="W" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-52" value="93">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-93.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;52&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											文艺男
+											<span class="color">文艺男</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="夏米洛" rel="X" name="X" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-53" value="53">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-53.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;53&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											夏米洛
+											<span class="color">夏米洛</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="俞兆林" rel="Y" name="Y" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-54" value="63">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-63.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;54&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											俞兆林
+											<span class="color">俞兆林</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="鸠鸠羊" rel="Y" name="Y" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-55" value="153">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-153.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;55&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											鸠鸠羊
+											<span class="color">鸠鸠羊</span>
+											<i></i>
+										</a>
+									</li>
+
+									<li class="brand" title="羊绒" rel="Y" name="Y" style="display: block;">
+										<input type="checkbox" style="display: none;" name="checkbox_brand[]" id="chk-brand-56" value="154">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-154.html" onclick="return duoxuan_Onclick(&#39;brand&#39;,&#39;56&#39;, this);" style="background: url({ imageurl($ lazyload_image)">
+											羊绒
+											<span class="color">羊绒</span>
+											<i></i>
+										</a>
+									</li>
+
+								</ul>
+							</div>
+
+							<div class="duoxuan-btnbox">
+								<!--当没有选中任何品牌时，确定按钮为禁用状态disabled;当选中品牌后，确定按钮添加select-button-sumbit样式-->
+								<a id="button-brand"></a>
+								<a class="select-button disabled" onclick="duoxuan_Submit(&#39;brand&#39;,0,&#39;/list-27-0-0-0-0-0-0-1-3-51_01-0-{0}.html&#39;);">确定</a>
+								<a href="javascript:void(0);" onclick="hiddenDuoXuan(&#39;attr-group-dl-brand&#39;, &#39;brand&#39;);" class="select-button">取消</a>
+							</div>
+						</dd>
+					</dl>
+					<script type="text/javascript">
+						duoxuan_a_valid['brand'] = 0;
+						init_more('brand-abox', 'brand-more', '83');
+					</script>
+
+					<!--价格-->
+
+					<dl>
+						<dt>价格：</dt>
+						<dd class="moredd">&nbsp;</dd>
+						<dd>
+							<ul>
+
+								<li>
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-0-0-190.html">0&nbsp;-&nbsp;190</a>
+								</li>
+
+								<li>
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-0-190-380.html">190&nbsp;-&nbsp;380</a>
+								</li>
+
+								<li>
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-0-380-570.html">380&nbsp;-&nbsp;570</a>
+								</li>
+
+								<li>
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-0-570-760.html">570&nbsp;-&nbsp;760</a>
+								</li>
+
+								<li>
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0-0-950-1140.html">950&nbsp;-&nbsp;1140</a>
+								</li>
+
+								<li>
+									<input name="price_min" id="price_min" value="" class="input-txt" autocomplete="off" type="text" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)">
+									<i></i>
+									<input name="price_max" id="price_max" value="" class="input-txt" autocomplete="off" type="text" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)">
+									<a class="select-button" href="javascript:void(0);" onclick="setPrice(&#39;/list-27-0-0-0-0-0-0-1-3-51_01-0-0-{0}-{1}.html&#39;);">确定</a>
+								</li>
+							</ul>
+						</dd>
+					</dl>
+
+					<!--当展开时，为dl添加duoxuan样式-->
+					<!--颜色-->
+					<!-- -->
+				</div>
+
+			</form>
+
+			<script type="text/javascript">
+				$(function() {
+					$('.other-vattr-li').bind('click', function() {
+						var seled_input_num = $(this).parents('ul').find('input[type="checkbox"]:checked').length;
+						if(seled_input_num > 0) {
+							$(this).parents('dd').find('.select-button').eq(0).attr('class', 'select-button select-button-sumbit');
+						} else if(seled_input_num == 0) {
+							$(this).parents('dd').find('.select-button').eq(0).attr('class', 'select-button disabled');
+						}
+					})
+				})
+			</script>
+			<div class="blank15"></div>
+			<div class="content-wrap category-wrap clearfix">
+				<!--左侧内容-->
+				<div class="aside" style="width: 210px;">
+					<span class="slide-aside"></span>
+					<div class="aside-inner" style="width: 210px; display: block;">
+						<!--新品推荐-->
+
+						<div class="aside-con">
+							<h2 class="aside-tit">新品推荐</h2>
+							<ul class="aside-list">
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季" href="http://www.itsource.cn/goods-4.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/14788784646707(1).jpg" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/11/14788784646707.jpg?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季" href="http://www.itsource.cn/goods-4.html">加绒打底裤加厚外穿女裤秋款铅笔黑色小脚高腰秋冬款保暖长裤冬季</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥29.50</span>
+										<span class="market-price">
+									<del>￥29.50</del>
+								</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤" href="http://www.itsource.cn/goods-7.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/14789657995869(1).png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789657995869.png?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤" href="http://www.itsource.cn/goods-7.html">浪莎加绒加厚打底裤女秋冬外穿高腰大码踩脚黑色保暖棉裤小脚长裤</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥29.90</span>
+										<span class="market-price">
+									<del>￥39.90</del>
+								</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子" href="http://www.itsource.cn/goods-9.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/14789669544048(1).png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789669544048.png?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子" href="http://www.itsource.cn/goods-9.html">紧身裤女加厚加绒踩脚裤打底裤丝袜秋冬款外穿冬季保暖裤一体裤子</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥15.90</span>
+										<span class="market-price">
+									<del>￥50.00</del>
+								</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜" href="http://www.itsource.cn/goods-10.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/14789686200823(1).png" data-original="http://itsource.oss-cn-beijing.aliyuncs.com/图片/shop/6/gallery/2016/11/12/14789686200823.png?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜" href="http://www.itsource.cn/goods-10.html">加绒加厚打底裤女士秋冬款外穿显瘦高腰保暖裤子棉裤冬季踩脚裤袜</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥28.80</span>
+										<span class="market-price">
+									<del>￥58.80</del>
+								</span>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+
+						<!--销量排行榜-->
+
+						<div class="aside-con">
+							<h2 class="aside-tit">销量排行榜</h2>
+							<ul class="aside-list">
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装" href="http://www.itsource.cn/goods-2393.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/537310635822/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装" href="http://www.itsource.cn/goods-2393.html">花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥79.00</span>
+										<span class="sale-num">销量：375568</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头" href="http://www.itsource.cn/goods-2436.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/39309371619/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头" href="http://www.itsource.cn/goods-2436.html">南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥35.80</span>
+										<span class="sale-num">销量：363671</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣" href="http://www.itsource.cn/goods-2386.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521136254098/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣" href="http://www.itsource.cn/goods-2386.html">南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥49.90</span>
+										<span class="sale-num">销量：322352</span>
+									</div>
+								</li>
+
+								<li>
+									<!--售罄-->
+
+									<div class="p-img">
+										<a target="_blank" title="南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚" href="http://www.itsource.cn/goods-2607.html" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521255797655/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_450,w_450" style="display: inline;">
+										</a>
+									</div>
+									<div class="p-name">
+										<a target="_blank" title="南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚" href="http://www.itsource.cn/goods-2607.html">南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚</a>
+									</div>
+									<div class="p-price">
+										<span class="sale-price second-color">￥12.60</span>
+										<span class="sale-num">销量：318972</span>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+
+					</div>
+				</div>
+				<!--右侧内容-->
+				<div class="main" style="padding-left: 225px;">
+					<div class="" id="filter" style="">
+						<!--排序-->
+						<form method="GET" name="listform" action="http://www.itsource.cn/list-27-1-0-0-0-0-0-1-3-51_01-0.html">
+							<div class="fore1">
+								<dl class="order">
+
+									<dd class="">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-0-0-51_01-0.html">
+											综合
+
+										</a>
+									</dd>
+
+									<dd class="first curr">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-4-51_01-0.html">
+											销量
+
+											<b class="icon-order-DESCending"></b>
+
+										</a>
+									</dd>
+
+									<dd class="">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-2-3-51_01-0.html">
+											新品
+
+											<b class="icon-order-DESCending"></b>
+
+										</a>
+									</dd>
+
+									<dd class="">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-3-3-51_01-0.html">
+											评论
+
+											<b class="icon-order-DESCending"></b>
+
+										</a>
+									</dd>
+
+									<dd class="">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-4-3-51_01-0.html">
+											价格
+
+											<b class="icon-order-DESCending"></b>
+
+										</a>
+									</dd>
+
+									<dd class="">
+										<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-5-3-51_01-0.html">
+											人气
+
+											<b class="icon-order-DESCending"></b>
+
+										</a>
+									</dd>
+
+								</dl>
+								<div class="pagin">
+
+									<!---->
+									<a class="prev disabled">
+										<span class="icon prev-disabled"></span>
+									</a>
+									<!---->
+
+									<span class="text">
+								<font class="color">1</font>
+								/
+								
+								71
+								
+							</span>
+									<!---->
+									<a class="next next-page" data-go-page="2" href="javascript:;">
+										<span class="icon next-btn"></span>
+									</a>
+
+								</div>
+								<div class="total">
+									共<span class="color">1401</span> 个商品
+								</div>
+							</div>
+							<div class="fore2">
+								<div class="filter-btn">
+									<span class="distribution">配送至</span>
+									<div class="region-chooser-container" style="z-index: 3"></div>
+									<!-- 选中的筛选条件给 a 标签追加类名 即  class="filter-tag curr" _star-->
+
+									<a href="http://www.itsource.cn/list-27-0-0-1-0-0-0-1-3-51_01-0.html" class="filter-tag ">
+										<input class="none" name="fff" onclick="" type="checkbox">
+										<i class="icon"></i>
+										<span class="text">平台自营</span>
+									</a>
+
+									<a href="http://www.itsource.cn/list-27-0-0-0-1-0-0-1-3-51_01-0.html" class="filter-tag ">
+										<input class="none" name="fff" onclick="" type="checkbox">
+										<i class="icon"></i>
+										<span class="text">包邮</span>
+									</a>
+
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-1-0-1-3-51_01-0.html" class="filter-tag ">
+										<input class="none" name="fff" onclick="" type="checkbox">
+										<i class="icon"></i>
+										<span class="text">支持货到付款</span>
+									</a>
+
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-1-1-3-51_01-0.html" class="filter-tag ">
+										<input class="none" name="fff" onclick="" type="checkbox">
+										<i class="icon"></i>
+										<span class="text">仅显示有货</span>
+									</a>
+
+								</div>
+								<div class="filter-mod">
+									<!--选中样式为a标签添加curr样式-->
+
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-0.html" title="大图模式" class="filter-type filter-type-grid curr">
+										<span class="filter-type-icon"></span>
+									</a>
+
+									<a href="http://www.itsource.cn/list-27-0-0-0-0-0-0-1-3-51_01-1.html" title="列表模式" class="filter-type filter-type-list">
+										<span class="filter-type-icon"></span>
+									</a>
+
+								</div>
+							</div>
+						</form>
+					</div>
+					<!--主体商品内容展示-->
+
+					<form name="compareForm" action="http://www.itsource.cn/compare.php" method="post" onsubmit="" id="table_list">
+
+						<ul class="list-grid clearfix">
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2393.html" title="花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic(1).jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/537310635822/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥79.00</em>
+											<em class="sale-count">已售375568件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2393.html" target="_blank" title="花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装">花花公子男士纯棉秋衣秋裤薄款棉毛衫青年全棉基础保暖内衣男套装</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2393" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/537310635822/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2393&#39;,47238,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2393">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2393.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2393" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/537310635822/TB1RwYELXXXXXXHaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2436.html" title="南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic(1).jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/39309371619/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥35.80</em>
+											<em class="sale-count">已售363671件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2436.html" target="_blank" title="南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头">南极人男士内裤男纯棉质平角裤大码青年卡通四角内裤男生可爱裤头</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2436" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/39309371619/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2436&#39;,48007,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2436">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2436.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2436" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/39309371619/TB13UeJKVXXXXcJXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2386.html" title="南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic(1).jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521136254098/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥49.90</em>
+											<em class="sale-count">已售322352件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2386.html" target="_blank" title="南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣">南极人男士保暖内衣男加厚加绒女冬秋衣秋裤中老年保暖套装防寒衣</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2386" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521136254098/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2386&#39;,46754,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2386">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2386.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2386" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521136254098/TB186J.NpXXXXbXXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item last">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2607.html" title="南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic(1).jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521255797655/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥12.60</em>
+											<em class="sale-count">已售318972件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2607.html" target="_blank" title="南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚">南极人丝袜连裤袜防勾丝秋季中厚打底裤袜秋冬款加绒加厚连体连脚</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2607" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521255797655/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2607&#39;,55413,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2607">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2607.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2607" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521255797655/TB12zSlNVXXXXb.aXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2385.html" title="南极人男士女士秋衣秋裤棉毛衫圆领打底薄款情侣保暖内衣女套装" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1kTfaOXXXXXb6XpXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/25354992789/TB1kTfaOXXXXXb6XpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥39.80</em>
+											<em class="sale-count">已售312452件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2385.html" target="_blank" title="南极人男士女士秋衣秋裤棉毛衫圆领打底薄款情侣保暖内衣女套装">南极人男士女士秋衣秋裤棉毛衫圆领打底薄款情侣保暖内衣女套装</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2385" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/25354992789/TB1kTfaOXXXXXb6XpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2385&#39;,46670,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2385">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2385.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2385" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/25354992789/TB1kTfaOXXXXXb6XpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2384.html" title="南极人保暖内衣男士女士双层加厚加绒冬季秋衣秋裤套装黄金绒暖甲" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1aShoOpXXXXb.XFXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/3316310008/TB1aShoOpXXXXb.XFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥39.90</em>
+											<em class="sale-count">已售280595件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2384.html" target="_blank" title="南极人保暖内衣男士女士双层加厚加绒冬季秋衣秋裤套装黄金绒暖甲">南极人保暖内衣男士女士双层加厚加绒冬季秋衣秋裤套装黄金绒暖甲</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2384" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/3316310008/TB1aShoOpXXXXb.XFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2384&#39;,46611,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2384">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2384.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2384" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/3316310008/TB1aShoOpXXXXb.XFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2488.html" title="袜子男纯棉中筒袜棉袜秋冬季短袜全棉吸汗防臭男士商务男袜礼盒装" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB17pAPMVXXXXcbXpXXYXGcGpXX_M2.SS2" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534137803418/TB17pAPMVXXXXcbXpXXYXGcGpXX_M2.SS2?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥25.80</em>
+											<em class="sale-count">已售269978件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2488.html" target="_blank" title="袜子男纯棉中筒袜棉袜秋冬季短袜全棉吸汗防臭男士商务男袜礼盒装">袜子男纯棉中筒袜棉袜秋冬季短袜全棉吸汗防臭男士商务男袜礼盒装</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2488" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534137803418/TB17pAPMVXXXXcbXpXXYXGcGpXX_M2.SS2?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2488&#39;,50058,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2488">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2488.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2488" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534137803418/TB17pAPMVXXXXcbXpXXYXGcGpXX_M2.SS2?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item last">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2454.html" title="南极人无痕内裤女纯棉裆性感大码中腰女士裤头棉质面料少女三角裤" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB18nkXOXXXXXXvXFXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527526627539/TB18nkXOXXXXXXvXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥39.90</em>
+											<em class="sale-count">已售227965件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2454.html" target="_blank" title="南极人无痕内裤女纯棉裆性感大码中腰女士裤头棉质面料少女三角裤">南极人无痕内裤女纯棉裆性感大码中腰女士裤头棉质面料少女三角裤</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2454" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527526627539/TB18nkXOXXXXXXvXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2454&#39;,48868,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2454">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2454.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2454" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527526627539/TB18nkXOXXXXXXvXFXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2438.html" title="彼尔丹5条礼盒装男士内裤纯棉质性感潮青年平角裤四角裤男生裤头" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1XxpOLpXXXXauapXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/525872562108/TB1XxpOLpXXXXauapXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥29.90</em>
+											<em class="sale-count">已售224907件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2438.html" target="_blank" title="彼尔丹5条礼盒装男士内裤纯棉质性感潮青年平角裤四角裤男生裤头">彼尔丹5条礼盒装男士内裤纯棉质性感潮青年平角裤四角裤男生裤头</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2438" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/525872562108/TB1XxpOLpXXXXauapXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2438&#39;,48123,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2438">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2438.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2438" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/525872562108/TB1XxpOLpXXXXauapXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2397.html" title="红豆秋衣秋裤男士女士纯棉薄款棉毛衫全棉中老年保暖基础内衣套装" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1P564MVXXXXXmXVXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535816367410/TB1P564MVXXXXXmXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥49.80</em>
+											<em class="sale-count">已售209692件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2397.html" target="_blank" title="红豆秋衣秋裤男士女士纯棉薄款棉毛衫全棉中老年保暖基础内衣套装">红豆秋衣秋裤男士女士纯棉薄款棉毛衫全棉中老年保暖基础内衣套装</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2397" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535816367410/TB1P564MVXXXXXmXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2397&#39;,47426,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2397">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2397.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2397" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535816367410/TB1P564MVXXXXXmXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2027.html" title="加绒仿皮打底裤加厚外穿长裤显瘦黑色小脚裤皮裤弹力大码女裤秋冬" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1LR0lLXXXXXaGXVXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/42186460554/TB1LR0lLXXXXXaGXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥15.90</em>
+											<em class="sale-count">已售200545件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2027.html" target="_blank" title="加绒仿皮打底裤加厚外穿长裤显瘦黑色小脚裤皮裤弹力大码女裤秋冬">加绒仿皮打底裤加厚外穿长裤显瘦黑色小脚裤皮裤弹力大码女裤秋冬</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2027" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/42186460554/TB1LR0lLXXXXXaGXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2027&#39;,38562,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2027">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2027.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2027" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/42186460554/TB1LR0lLXXXXXaGXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item last">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2606.html" title="春秋季丝袜连裤袜中厚打底袜子女防勾丝天鹅绒彩色黑长袜秋冬包邮" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1YTYHHpXXXXc_XXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/40335182511/TB1YTYHHpXXXXc_XXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥9.80</em>
+											<em class="sale-count">已售183709件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2606.html" target="_blank" title="春秋季丝袜连裤袜中厚打底袜子女防勾丝天鹅绒彩色黑长袜秋冬包邮">春秋季丝袜连裤袜中厚打底袜子女防勾丝天鹅绒彩色黑长袜秋冬包邮</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2606" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/40335182511/TB1YTYHHpXXXXc_XXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2606&#39;,55385,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2606">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2606.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2606" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/40335182511/TB1YTYHHpXXXXc_XXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2390.html" title="北极绒纯棉男士秋裤保暖线裤棉毛裤全棉衬裤薄款女士打底裤男单件" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB11pMlMVXXXXbyaXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535333167862/TB11pMlMVXXXXbyaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥29.90</em>
+											<em class="sale-count">已售180727件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2390.html" target="_blank" title="北极绒纯棉男士秋裤保暖线裤棉毛裤全棉衬裤薄款女士打底裤男单件">北极绒纯棉男士秋裤保暖线裤棉毛裤全棉衬裤薄款女士打底裤男单件</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2390" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535333167862/TB11pMlMVXXXXbyaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2390&#39;,47027,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2390">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2390.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2390" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/535333167862/TB11pMlMVXXXXbyaXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2439.html" title="七匹狼男士内裤男 男平角裤冰丝大码四角内裤青年男生裤头男内裤" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1XBQBLFXXXXboXXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527358143218/TB1XBQBLFXXXXboXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥59.00</em>
+											<em class="sale-count">已售173776件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2439.html" target="_blank" title="七匹狼男士内裤男 男平角裤冰丝大码四角内裤青年男生裤头男内裤">七匹狼男士内裤男 男平角裤冰丝大码四角内裤青年男生裤头男内裤</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2439" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527358143218/TB1XBQBLFXXXXboXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2439&#39;,48179,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2439">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2439.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2439" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/527358143218/TB1XBQBLFXXXXboXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-1137.html" title="韩版百搭纯色超大春夏防晒棉麻围巾文艺女式冬季披肩韩国丝巾女" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1O_vnJXXXXXbaXXXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521415925389/TB1O_vnJXXXXXbaXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥9.50</em>
+											<em class="sale-count">已售166136件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-1137.html" target="_blank" title="韩版百搭纯色超大春夏防晒棉麻围巾文艺女式冬季披肩韩国丝巾女">韩版百搭纯色超大春夏防晒棉麻围巾文艺女式冬季披肩韩国丝巾女</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="1137" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521415925389/TB1O_vnJXXXXXbaXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;1137&#39;,25559,this)" class="operate-btn collet-btn goods-collect" data-goods-id="1137">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-1137.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="1137" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521415925389/TB1O_vnJXXXXXbaXXXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item last">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-429.html" title="欧比森保暖白衬衫男士长袖修身韩版纯色加绒加厚商务衬衣男装寸衫" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB16cQbOXXXXXbSXpXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/41458920633/TB16cQbOXXXXXbSXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥29.90</em>
+											<em class="sale-count">已售164771件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-429.html" target="_blank" title="欧比森保暖白衬衫男士长袖修身韩版纯色加绒加厚商务衬衣男装寸衫">欧比森保暖白衬衫男士长袖修身韩版纯色加绒加厚商务衬衣男装寸衫</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="429" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/41458920633/TB16cQbOXXXXXbSXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;429&#39;,6163,this)" class="operate-btn collet-btn goods-collect" data-goods-id="429">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-429.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="429" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/41458920633/TB16cQbOXXXXXbSXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2440.html" title="佐华奴四条礼盒装男士内裤 男平角裤 性感潮中腰冰丝感四角裤头" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB13r9aLpXXXXctXVXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534301923154/TB13r9aLpXXXXctXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥19.90</em>
+											<em class="sale-count">已售162665件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2440.html" target="_blank" title="佐华奴四条礼盒装男士内裤 男平角裤 性感潮中腰冰丝感四角裤头">佐华奴四条礼盒装男士内裤 男平角裤 性感潮中腰冰丝感四角裤头</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2440" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534301923154/TB13r9aLpXXXXctXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2440&#39;,48192,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2440">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2440.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2440" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/534301923154/TB13r9aLpXXXXctXVXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-1823.html" title="秋冬韩版短款宽松半高领毛衣打底衫女外套长袖套头加厚紧身针织衫" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB1qnFuNFXXXXarXpXXXXXXXXXX_!!0-item_pic.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/523084320739/TB1qnFuNFXXXXarXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥39.80</em>
+											<em class="sale-count">已售160323件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-1823.html" target="_blank" title="秋冬韩版短款宽松半高领毛衣打底衫女外套长袖套头加厚紧身针织衫">秋冬韩版短款宽松半高领毛衣打底衫女外套长袖套头加厚紧身针织衫</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="1823" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/523084320739/TB1qnFuNFXXXXarXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;1823&#39;,32728,this)" class="operate-btn collet-btn goods-collect" data-goods-id="1823">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-1823.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="1823" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/523084320739/TB1qnFuNFXXXXarXpXXXXXXXXXX_!!0-item_pic.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item ">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2437.html" title="南极人男士内裤 男平角裤纯棉质大码性感四角短裤头青年4条男生潮" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB21K_WcPm2.eBjSZFtXXX56VXa_!!26839388.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/44047642649/TB21K_WcPm2.eBjSZFtXXX56VXa_!!26839388.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥32.80</em>
+											<em class="sale-count">已售157266件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2437.html" target="_blank" title="南极人男士内裤 男平角裤纯棉质大码性感四角短裤头青年4条男生潮">南极人男士内裤 男平角裤纯棉质大码性感四角短裤头青年4条男生...</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2437" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/44047642649/TB21K_WcPm2.eBjSZFtXXX56VXa_!!26839388.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2437&#39;,48083,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2437">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2437.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2437" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/44047642649/TB21K_WcPm2.eBjSZFtXXX56VXa_!!26839388.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+							<!-- -->
+							<!-- 如果是4的整数倍，给 li 标签添加class="last"值，即class="item last" -->
+							<li class="item last">
+								<div class="item-con">
+
+									<!--售罄-->
+
+									<div class="item-pic">
+										<a href="http://www.itsource.cn/goods-2453.html" title="5条女士内裤女纯棉无痕全棉蕾丝性感低腰三角裤大码中腰棉质面料" target="_blank" style="background: url({ imageurl($ lazyload_image)">
+											<img alt="" src="img/test/TB21dhwX5Zd61BjSZFLXXXMMFXa_!!87580387.jpg" data-original="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521077644536/TB21dhwX5Zd61BjSZFLXXXMMFXa_!!87580387.jpg?x-oss-process=image/resize,m_pad,limit_0,h_320,w_320" style="display: inline;">
+										</a>
+									</div>
+									<div class="img-scroll scrolled" style=" display: none;">
+										<a href="javascript:;" class="img-prev">&lt;</a>
+										<a href="javascript:;" class="img-next">&gt;</a>
+										<div class="img-wrap">
+											<ul class="img-main" style="left: 0px; width: 238px;">
+												<li class="img-item">
+													<a href="javascript:;" title="粉色" class="curr"><img width="25" height="25" src="img/test/1.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title="红色"><img width="25" height="25" src="img/test/2.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/5.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/3.jpg"></a>
+												</li>
+												<li class="img-item">
+													<a href="javascript:;" title=""><img width="25" height="25" src="img/test/4.jpg"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="item-info">
+										<div class="item-price">
+											<em class="sale-price second-color">￥19.90</em>
+											<em class="sale-count">已售152769件</em>
+										</div>
+										<div class="item-name">
+											<a href="http://www.itsource.cn/goods-2453.html" target="_blank" title="5条女士内裤女纯棉无痕全棉蕾丝性感低腰三角裤大码中腰棉质面料">5条女士内裤女纯棉无痕全棉蕾丝性感低腰三角裤大码中腰棉质面料</a>
+											<!-- 包邮、赠品标签  _star -->
+
+											<i class="free-shipping">包邮</i>
+
+											<!-- 包邮、赠品标签  _end -->
+										</div>
+										<div class="item-con-info">
+											<div class="fl">
+												<div class="item-operate">
+													<a class="operate-btn compare-btn goods-comapre" data-compare-goods-id="2453" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521077644536/TB21dhwX5Zd61BjSZFLXXXMMFXa_!!87580387.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80">
+														<i></i> 对比
+													</a>
+
+													<a href="javascript:;" onclick="toggleGoods(&#39;2453&#39;,48824,this)" class="operate-btn collet-btn goods-collect" data-goods-id="2453">
+														<i></i>
+														<span>收藏</span>
+													</a>
+
+													<a href="http://www.itsource.cn/goods-2453.html#goods_evaluate" target="_blank" class="operate-btn comment-btn">
+														<i></i> 0
+													</a>
+												</div>
+												<div class="item-shop">
+													<a href="http://www.itsource.cn/shop/6" target="_blank" title="爱购网官方自营二号店">
+														<!--   -->
+														<span>爱购网官方自营二号店</span>
+													</a>
+												</div>
+											</div>
+											<div class="fr">
+												<div class="item-add-cart">
+
+													<a href="javascript:;" style="background-image: url(css/add-cart.jpg)" data-goods-id="2453" data-image-url="http://itsource.img-cn-beijing.aliyuncs.com/图片/taobao-yun-images/521077644536/TB21dhwX5Zd61BjSZFLXXXMMFXa_!!87580387.jpg?x-oss-process=image/resize,m_pad,limit_0,h_80,w_80" class="add-cart disable" title="加入购物车"></a>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</li>
+
+						</ul>
+
+						<!--分页-->
+						<div class="pull-right page-box">
+
+							<div id="pagination" class="page">
+								<script data-page-json="true" type="text">
+									{"page_key":"page","page_id":"pagination","default_page_size":15,"cur_page":1,"page_size":20,"page_size_list":[1,10,20,30,50],"record_count":1401,"page_count":71,"offset":0,"url":null,"sql":null}
+								</script>
+								<div class="page-wrap fr">
+									<div class="total">共1401条记录</div>
+								</div>
+								<div class="page-num fr">
+									<span class="num prev disabled" style="display: none;">
+			<a class="fa fa-angle-double-left" data-go-page="1" title="第一页"></a>
+		</span>
+
+		<span>
+			<a class="num prev disabled " title="上一页">上一页</a>
+		</span>
+
+
+		<span class="num curr">
+			<a data-cur-page="1">1</a>
+		</span>
+
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="2">2</a>
+		</span>
+
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="3">3</a>
+		</span>
+
+									<!--   -->
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="4">4</a>
+		</span>
+
+									<!--   -->
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="5">5</a>
+		</span>
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="6" title="快速向后翻页">...</a>
+		</span>
+
+									<span>
+			<a class="num " href="javascript:void(0);" data-go-page="71" title="最后一页">71</a>
+		</span>
+
+									<span class="" style="display: none;">
+			<a class="num " data-go-page="71" title="最后一页"></a>
+		</span>
+
+									<span>
+			<a class="num next" data-go-page="2" title="下一页">下一页</a>
+		</span>
+
+								</div>
+							</div>
+
+						</div>
+
+					</form>
+
+					<!--对比栏-->
+				</div>
+			</div>
+			<!--历史记录和猜你喜欢-->
+
+		</div>
+
+		<script type="text/javascript" src="js/jquery.region.js"></script>
+		<script type="text/javascript" src="js/jquery.widget.js"></script>
+		<script type="text/javascript" src="js/jquery.tablelist.js"></script>
+		<!-- 选中当前分类弹出同级分类JS -->
+		<script type="text/javascript">
+			$(function() {
+				$('.breadcrumb .crumbs-nav').hover(function() {
+					$(this).toggleClass('curr');
+				})
+			});
+		</script>
+		<script type="text/javascript">
+			$().ready(function() {
+
+				var page_url = "/list-27-{0}-0-0-0-0-0-1-3-51_01-0.html";
+				page_url = page_url.replace(/&amp;/g, '&');
+
+				var tablelist = $("#table_list").tablelist({
+					page_mode: 1,
+					go: function(page) {
+						page_url = page_url.replace("{0}", page);
+						$.go(page_url);
+					}
+				});
+
+				$(".prev-page").click(function() {
+					tablelist.prePage();
+				});
+
+				$(".next-page").click(function() {
+					tablelist.nextPage();
+				});
+
+				$(".add-cart").click(function(event) {
+					var goods_id = $(this).data("goods-id");
+					var image_url = $(this).data("image-url");
+					$.cart.add(goods_id, 1, {
+						is_sku: false,
+						event: event,
+						image_url: image_url,
+						callback: function() {
+							var attr_list = $('.attr-list').height();
+							$('.attr-list').css({
+								"overflow": "hidden"
+							});
+							if(attr_list >= 200) {
+								$('.attr-list').css({
+									"overflow-y": "auto"
+								});
+							}
+						}
+					});
+					//列表页面属性弹框
+
+				});
+				$(".compare-btn").click(function(event) {
+					var goods_id = $(this).data("compare-goods-id");
+					var image_url = $(this).data("image-url");
+					var that = $(this);
+					if($(this).hasClass("curr")) {
+						$.compare.remove(goods_id, function(result) {
+							if(result.code == 0) {
+								that.removeClass('curr');
+							}
+						});
+					} else {
+						$.compare.add(goods_id, image_url, event, function(result) {
+							if(result.code == 0) {
+								that.addClass('curr');
+							}
+						});
+					}
+				});
+
+				// 移除对对比商品
+				$.compare.removeCallback = function(goods_id, result) {
+						$("[data-compare-goods-id='" + goods_id + "']").removeClass('curr');
+					}
+					// 清空对比商品
+				$.compare.clearCallback = function(goods_id, result) {
+					$("[data-compare-goods-id]").removeClass('curr');
+				}
+
+				//规格相册
+				sildeImg(0);
+
+				<!-- 获取当前地址 -->
+				//地区组件
+				var region_chooser = $(".region-chooser-container").regionchooser({
+					value: "51,01",
+					change: function(value, names, is_last) {
+						if(value == '') {
+							var values = this.values();
+							if(values.length > 0) {
+								value = values[values.length - 1].region_code;
+							}
+						}
+
+						var region_code = "51,01";
+						if(is_last && value != region_code) {
+							value = value + "";
+							value = value.replace(/,/g, "_");
+							var url = "/list-27-0-0-0-0-0-0-1-3-{0}-0.html";
+							url = url.replace(/&amp;/g, '&');
+							url = url.replace("{0}", value);
+							$.go(url);
+						}
+					}
+				});
+				var goods_ids = '2393-2436-2386-2607-2385-2384-2488-2454-2438-2397-2027-2606-2390-2439-1137-429-2440-1823-2437-2453';
+				$.collect.getGoodsList(goods_ids, null, function(result) {
+					var goods_list = result.data;
+					$(".goods-collect").each(function() {
+						var goods_id = $(this).data("goods-id");
+						if(result.code == 0) {
+							if(goods_list[goods_id]) {
+								$(this).addClass("curr");
+								$(this).find("span").html("已收藏");
+							} else {
+								$(this).removeClass("curr");
+								$(this).find("span").html("收藏");
+							}
+						}
+					});
+				});
+				$.compare.getGoodsList(goods_ids, function(result) {
+					var goods_list = result.data;
+					$(".goods-comapre").each(function() {
+						var goods_id = $(this).data("compare-goods-id");
+						if(result.code == 0) {
+							if(goods_list[goods_id]) {
+								$(this).addClass("curr");
+							} else {
+								$(this).removeClass("curr");
+							}
+						}
+					});
+				});
+			});
+		</script>
+
+		<script type="text/javascript" src="js/category.js"></script>
+		<!-- 结束：主要区域内容-->
+
+		<!-- 站点底部-->
+
+		<!-- 右侧边栏 _start -->
+		<div class="right-sidebar-con">
+			<div class="right-sidebar-main">
+				<div class="right-sidebar-panel">
+					<div id="quick-links" class="quick-links">
+						<ul>
+							<li class="quick-area quick-login sidebar-user-trigger">
+								<!-- 用户 -->
+								<a href="javascript:void(0);" class="quick-links-a">
+									<i class="setting"></i>
+								</a>
+								<div class="sidebar-user quick-sidebar">
+									<i class="arrow-right"></i>
+									<div class="sidebar-user-info">
+										<!-- 没有登录的情况 _start -->
+										<div class="SZY-USER-NOT-LOGIN" style="">
+											<div class="user-pic">
+												<div class="user-pic-mask"></div>
+												<img src="img/test/default_user_portrait_0.png">
+											</div>
+											<br>
+											<p>
+												你好！请
+												<a href="javascript:void(0);" class="quick-login-a color ajax-login">登录</a>
+												|
+												<a href="register.html" class="color">注册</a>
+											</p>
+										</div>
+										<!-- 没有登录的情况 _end -->
+										<!-- 有登录的情况 _start -->
+										<div class="SZY-USER-ALREADY-LOGIN" style="display: none;">
+											<div class="user-have-login">
+												<div class="user-pic">
+													<div class="user-pic-mask"></div>
+													<img src="" class="SZY-USER-PIC">
+												</div>
+												<div class="user-info">
+													<p>
+														用&nbsp;&nbsp;&nbsp;户：
+														<span class="SZY-USER-NAME"></span>
+													</p>
+
+												</div>
+											</div>
+											<p class="m-t-10">
+												<span class="prev-login">
+					上次登录时间：
+					<span class="SZY-USER-LAST-LOGIN"></span>
+												</span>
+												<a href="user.html" class="btn account-btn" target="_blank">个人中心</a>
+												<a href="user/order.html" class="btn order-btn" target="_blank">订单中心</a>
+											</p>
+										</div>
+										<!-- 有登录的情况 _end -->
+									</div>
+								</div>
+							</li>
+							<li class="sidebar-tabs">
+								<!-- 购物车 -->
+								<div class="cart-list quick-links-a sidebar-cartbox-trigger">
+									<i class="cart"></i>
+									<div class="span">购物车</div>
+									<span class="ECS_CARTINFO">
+								<span class="cart_num SZY-CART-COUNT">0</span>
+									<div class="sidebar-cart-box">
+										<h3 class="sidebar-panel-header">
+										<a href="javascript:void(0);" class="title">
+											<i class="cart-icon"></i>
+											<em class="title">购物车</em>
+										</a>
+										<span class="close-panel"></span>
+									</h3>
+									</div>
+									</span>
+								</div>
+							</li>
+							<li class="sidebar-tabs">
+								<a href="javascript:void(0);" class="mpbtn_history quick-links-a sidebar-historybox-trigger">
+									<i class="history"></i>
+								</a>
+								<div class="popup">
+									<font id="mpbtn_histroy">我看过的</font>
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<!-- 如果当前页面有对比功能 则显示对比按钮 _start-->
+							<li class="sidebar-tabs">
+								<a href="javascript:void(0);" class="mpbtn-contrast quick-links-a sidebar-comparebox-trigger">
+									<i class="contrast"></i>
+								</a>
+								<div class="popup">
+									对比商品
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<!-- 如果当前页面有对比功能 则显示对比按钮 _end-->
+							<li>
+								<a href="user/collect/shop.html" target="_blank" class="mpbtn_stores quick-links-a">
+									<i class="stores"></i>
+								</a>
+								<div class="popup">
+									我收藏的店铺
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<li id="collectGoods">
+								<a href="user/collect/goods.html" target="_blank" class="mpbtn_collect quick-links-a">
+									<i class="collect"></i>
+								</a>
+								<div class="popup">
+									我的收藏
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="quick-toggle">
+						<ul>
+
+							<li class="quick-area">
+								<a class="quick-links-a" href="javascript:void(0);">
+									<i class="customer-service"></i>
+								</a>
+								<div class="sidebar-service quick-sidebar">
+									<i class="arrow-right"></i>
+
+									<div class="customer-service">
+										<a target="_blank" href="#">
+											<span class="icon-qq"></span> QQ
+										</a>
+									</div>
+
+									<div class="customer-service">
+										<a target="_blank" href="#">
+											<span class="icon-ww"></span> 旺旺
+										</a>
+									</div>
+
+								</div>
+							</li>
+
+							<li class="quick-area">
+								<a class="quick-links-a" href="javascript:void(0);">
+									<i class="qr-code"></i>
+								</a>
+								<div class="sidebar-code quick-sidebar">
+									<i class="arrow-right"></i>
+									<img src="img/test/mall_wx_qrcode_0.jpg">
+								</div>
+							</li>
+							<li class="returnTop" style="display: none;">
+								<a href="javascript:void(0);" class="return_top quick-links-a">
+									<i class="top"></i>
+								</a>
+								<div class="popup">
+									返回顶部
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="">
+					<!--红包 start-->
+					<!--红包 end-->
+					<!--购物车 start-->
+
+					<div class="right-sidebar-panels sidebar-cartbox">
+						<div class="sidebar-cart-box">
+							<h3 class="sidebar-panel-header">
+			<a href="javascript:void(0);" class="title" target="_blank">
+				<i class="cart-icon"></i>
+				<em class="title">购物车</em>
+			</a>
+			<span class="close-panel"></span>
+		</h3>
+							<div class="sidebar-cartbox-goods-list">
+
+								<div class="cart-panel-main">
+									<div class="cart-panel-content">
+
+										<!-- 没有商品的展示形式 _start -->
+										<div class="tip-box">
+											<i class="tip-icon"></i>
+											<div class="tip-text">
+												您的购物车里什么都没有哦
+												<br>
+												<a class="color" href="" title="再去看看吧" target="_blank">再去看看吧</a>
+											</div>
+										</div>
+										<!-- 没有商品的展示形式 _end-->
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!--购物车 end-->
+					<!--浏览历史 start-->
+					<!---->
+					<div class="right-sidebar-panels sidebar-historybox">
+						<h3 class="sidebar-panel-header">
+		<a href="javascript:;" class="title">
+			<i></i>
+			<em class="title">我的足迹</em>
+		</a>
+		<span class="close-panel"></span>
+	</h3>
+						<div class="sidebar-panel-main">
+							<div class="sidebar-panel-content sidebar-historybox-goods-list">
+								<!---->
+								<!---->
+								<!-- 没有浏览历史的展示形式 _start -->
+								<div class="tip-box">
+									<i class="tip-icon"></i>
+									<div class="tip-text">
+										您还没有在商城留下任何足迹哦
+										<br>
+										<a class="color" href="">赶快去看看吧</a>
+									</div>
+								</div>
+								<!-- 没有浏览历史的展示形式 _end-->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</div>
+					<!---->
+					<!--浏览历史 end-->
+					<!--对比列表 start-->
+
+					<!--对比列表 start-->
+					<div class="right-sidebar-panels sidebar-comparebox">
+						<h3 class="sidebar-panel-header">
+		<a href="javascript:void(0);" class="title">
+			<i class="compare-icon"></i>
+			<em class="title">宝贝对比</em>
+		</a>
+		<span class="close-panel"></span>
+	</h3>
+						<div>
+							<div class="sidebar-panel-main sidebar-comparebox-goods-list">
+
+								<div class="sidebar-panel-content compare-panel-content">
+
+									<!-- 没有对比商品的展示形式 _start -->
+									<div class="tip-box">
+										<i class="tip-icon"></i>
+										<div class="tip-text">
+											您的对比宝贝什么都没有哦
+											<br>
+											<a class="color" href="">再去看看吧</a>
+										</div>
+									</div>
+									<!-- 没有对比商品的展示形式 _end-->
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!--对比列表 end-->
+
+					<!--对比列表 end-->
+				</div>
+			</div>
+		</div>
+		<!-- 右侧边栏 _end -->
+
+		<!-- 底部 _start-->
+
+		<div class="site-footer">
+
+			<div class="footer-service">
+				<div align="center"><img src="img/test/14778844965714.jpg" alt="" height="85" width="1210"></div>
+			</div>
+
+			<div class="footer-related">
+
+				<div class="footer-article w1210">
+					<dl class="col-article col-article-spe">
+						<dt class="phone color">028-86261949</dt>
+						<dd class="email color">master@itsrouce.cn</dd>
+
+						<dd class="customer">
+							<span>联系我们</span>
+
+							<a href="#" target="_blank">
+								<em class="icon-ww"></em>
+							</a>
+
+							<a href="#" target="_blank">
+								<em class="icon-qq"></em>
+							</a>
+
+						</dd>
+
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>新手上路</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">购物流程</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">订单查询</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">常见问题</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">在线客服</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>支付方式</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">网上支付</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>配送服务</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">配送范围及收费标准</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">订单进度查询</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">验货与签收</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>售后服务</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退换货政策</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退换货流程</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退款说明</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>商家合作</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">商家入驻</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+
+					<div class="QR-code fr">
+
+						<ul class="tabs">
+
+						</ul>
+						<div class="code-content">
+
+							<div class="code ">
+								<img src="img/test/mall_wx_qrcode_0.jpg">
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="footer-desc-copyright">
+
+				<p class="footer-ecscinfo">
+					<a href="#">首页</a>
+					|
+
+					<a href="#">隐私保护</a>
+					|
+
+					<a href="#">联系我们</a>
+					|
+
+					<a href="#">免责条款</a>
+					|
+
+					<a href="#">公司简介</a>
+					|
+
+					<a href="#">意见反馈</a>
+
+					|
+					<a rel="nofollow" target="_blank" href="#">会员登录</a>
+					|
+					<a rel="nofollow" target="_blank" href="http://bbs.itsource.cn/">会员论坛</a>
+					|
+					<a href="javascript:;" rel="nofollow">客服热线028-86261949</a>
+				</p>
+				<p class="footer-otherlink">
+					<a title="源码商城" target="_blank" href="http://itsource.cn">源码商城</a>
+
+					|
+
+					<a title="菁鱼课堂" target="_blank" href="http://www.itsource.cn">菁鱼课堂</a>
+
+					|
+
+					<a title="资讯速递" target="_blank" href="http://www.itsource.cn">资讯速递</a>
+
+					|
+
+					<a title="快递查询" target="_blank" href="http://m.kuaidi100.com">快递查询</a>
+
+					|
+
+					<a title="论坛" target="_blank" href="http://bbs.itsource.com/forum.php">会员论坛</a>
+
+					|
+
+					<a title="源代码教育咨询有限公司" target="_blank" href="http://www.itsource.cn">源代码教育咨询有限公司</a>
+
+				</p>
+
+				<p class="footer-beian"> ICP备案证书号:
+					<a rel="nofollow" target="_blank" href="#">蜀ICP备88888888号-1</a>
+					<a rel="nofollow" target="_blank" href="#"><i></i>蜀公网安备 45323525326664号</a>
+				</p>
+				<p class="footer-Copyright">Copyright &copy; 2017
+					<a target="_blank" style="margin:0;padding:0;" href="http://www.saodangzu.com/">itsource.cn</a> All Rights Reserved. </p>
+				<p>&nbsp;</p>
+
+				<p class="footer-fp-img">
+					<a target="_blank" href="#"><img src="img/test/kxwz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/smyz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/cxyz.jpg"></a>
+					<a target="_blank" href="#"><img src="img/test/hyyz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/jpfw.png"></a>
+				</p>
+			</div>
+
+		</div>
+
+		<!-- 第三方流量统计 -->
+		<div style="display: none;"></div>
+		<!-- 底部 _end-->
+
+		<script type="text/javascript" src="js/jquery.fly.min.js"></script>
+		<script type="text/javascript" src="js/szy.cart.js"></script>
+		<!--[if lte IE 9]>
+<script type="text/javascript" src="/js/requestAnimationFrame.js"></script>
+<![endif]-->
+		<script type="text/javascript">
+			$().ready(function() {
+				$.cartbox.count = "0";
+				// 缓载图片
+				$("img").lazyload({
+					skip_invisible: false,
+					effect: 'fadeIn',
+					failure_limit: 20,
+					threshold: 200
+				});
+
+			});
+		</script>
+
+	</body>
+
+</html>

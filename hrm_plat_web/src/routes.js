@@ -2,12 +2,12 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
-import Table from './views/nav1/Table.vue'
 import Department from './views/itsource/department.vue'
 import CourseType from './views/course/courseType.vue'
 import Course from './views/course/course.vue'
 import TenantType from './views/tenant/tenantType.vue'
 import Tenant from './views/tenant/tenant.vue'
+import Page from './views/page/page.vue'
 import Role from './views/itsource/role.vue'
 import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
@@ -78,11 +78,12 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '导航二',
+        name: '页面管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '页面4' },
-            { path: '/page5', component: Page5, name: '页面5' }
+            { path: '/site', component: Page, name: '站点管理' },
+            { path: '/page', component: Page, name: '页面管理' },
+            { path: '/pageConfig', component: Page, name: '页面配置管理' }
         ]
     },
     {

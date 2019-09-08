@@ -1,0 +1,1052 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>确认订单</title>
+
+		<link type="text/css" rel="stylesheet" href="css/common.css">
+		<link type="text/css" rel="stylesheet" href="css/flow.css">
+		<!--整站改色 _start-->
+		<link type="text/css" rel="stylesheet" href="css/color-style.css">
+		<!--整站改色 _end-->
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/layer.js"></script>
+		<link rel="stylesheet" href="css/layer.css" id="layuicss-skinlayercss">
+		<script type="text/javascript" src="js/jquery.method.js"></script>
+	</head>
+
+	<body>
+		<div id="bg" class="bg" style="display: none;"></div>
+		
+		<div class="header-top">
+			<div class="header-box">
+
+				<!-- 站点 -->
+				<!--站点 start-->
+				<div class="SZY-SUBSITE">
+
+				</div>
+				<!--站点 end-->
+				<font id="login-info" class="login-info SZY-USER-NOT-LOGIN">
+					<a class="login color" href="login.html" target="_top">请登录</a>
+					<a class="register" href="register.html" target="_top">免费注册</a>
+				</font>
+				<font id="login-info" class="login-info SZY-USER-ALREADY-LOGIN" style="display: none;">
+					<em>
+		<a href="user.html" target="_blank" class="color SZY-USER-NAME"></a>
+		<!--欢迎您回来!-->
+	</em>
+					<a href="site/logout" data-method="post">退出</a>
+				</font>
+
+				<ul>
+					<li>
+						<a class="menu-hd home" href="" target="_top">
+							<i></i> 爱购首页
+						</a>
+					</li>
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd myinfo" href="user.html" target="_blank">
+								<i></i> 会员中心
+								<b></b>
+							</a>
+							<div id="menu-2" class="menu-bd" style="display: none;">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<a href="user/order.html" target="_blank">我的宝贝</a>
+									<a href="user/address.html" target="_blank">我的地址</a>
+									<a href="user/collect/goods.html" target="_blank">我的收藏</a>
+									<a href="user/collect/shop.html" target="_blank">关注店铺</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="menu-item cartbox">
+						<div class="menu">
+							<a class="menu-hd cart" href="cart.html" target="_top">
+								<i></i> 购物车
+								<span class="SZY-CART-COUNT">0</span>
+								<b></b>
+							</a>
+							<div id="menu-4" class="menu-bd cart-box-main">
+								<span class="menu-bd-mask"></span>
+								<div class="dropdown-layer">
+									<div class="spacer"></div>
+									<div class="dropdown-layer-con cartbox-goods-list">
+
+										<!-- 正在加载 -->
+										<div class="cart-type">
+											<i class="cart-type-icon"></i>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd we-chat" href="" target="_top">
+								<i></i> 关注爱购
+								<b></b>
+							</a>
+							<div id="menu-5" class="menu-bd we-chat-qrcode">
+								<span class="menu-bd-mask"></span>
+								<a target="_top">
+									<img src="img/test/mall_wx_qrcode_0.jpg" alt="官方微信">
+								</a>
+								<p class="font-14">关注官方微信</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a href="" class="menu-hd site-nav" target="_blank">
+								更多支持
+								<b></b>
+							</a>
+							<div id="menu-7" class="menu-bd site-nav-main">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<div class="site-nav-con">
+
+										<a href="article/info?id=38" target="_blank" title="新手上路">新手上路</a>
+
+										<a href="article/info?id=38" target="_blank" title="支付方式">支付方式</a>
+
+										<a href="article/list/3.html" target="_blank" title="配送服务">配送服务</a>
+
+										<a href="article/list/4.html" target="_blank" title="售后服务">售后服务</a>
+
+										<a href="article/info?id=38" target="_blank" title="商家合作">商家合作</a>
+
+										<a href="list.html?cat_id=17" target="_blank" title="店铺街">店铺街</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".SZY-SEARCH-BOX-TOP .SZY-SEARCH-BOX-SUBMIT-TOP").click(function() {
+					if($(".search-li-top.curr").attr('num') == 0) {
+						var keyword_obj = $(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-KEYWORD");
+
+						var keywords = $(keyword_obj).val();
+						if($.trim(keywords).length == 0 || $.trim(keywords) == "请输入关键词") {
+							keywords = $(keyword_obj).data("searchwords");
+						}
+						$(keyword_obj).val(keywords);
+					}
+					$(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-FORM").submit();
+				});
+			});
+		</script>
+		<!-- 引入上方导航条文件 -->
+		<div class="header">
+			<div class="w990">
+				<div class="logo-info">
+					<a href="http://www.itsource.cn/" class="logo">
+						<img src="./img/test/mall_logo_0.png">
+					</a>
+				</div>
+				<div class="cart-progress">
+					<ul>
+
+						<li class="finish finish-01">
+							<i>1</i>
+							<span>
+						<a href="http://www.itsource.cn/checkout.html">我的购物车</a>
+					</span>
+							<b></b>
+						</li>
+						<li class="finish finish-02">
+							<i>2</i>
+							<span>确认订单</span>
+							<b></b>
+						</li>
+						<li class="finish">
+							<i>3</i>
+							<span>付款</span>
+							<b></b>
+						</li>
+						<li class="finish">
+							<i>4</i>
+							<span>支付成功</span>
+							<b></b>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-bg">
+			<div class="content-main w990">
+				<div class="content-info">
+					<!-- 收货地址 -->
+					<div class="address-container border-line" id="addressinfo">
+						<div id="user_address_list" class="main-content">
+							<h2 class="title">地址选择</h2>
+							<div class="address">
+								<div class="address-list clearfix">
+									<!-- 收货地址为当前选中的地址时给div标签一个class，class值为"active" -->
+
+									<div data-address-id="571" class="address-box   ">
+										<div class="address-box-info" data-address-id="571">
+											<div class="name">张女士</div>
+											<div class="detaile">四川省 成都市 武侯区</div>
+											<div class="detaile">红牌楼小翠小区12-1-305</div>
+											<div class="number-phone">139****8870</div>
+										</div>
+										<div class="addr-operate">
+											<a href="javascript:void(0)" class="address-edit color" data-address-id="571" title="修改地址">修改</a>
+											<a href="javascript:void(0)" class="address-delete color" data-address-id="571" title="删除地址">删除</a>
+											<!-- 默认地址一直显示用span标签 -->
+											<a href="javascript:void(0)" class="address-default" data-address-id="571">设为默认</a>
+										</div>
+									</div>
+
+									<div data-address-id="570" class="address-box active  ">
+										<div class="address-box-info" data-address-id="570">
+											<div class="name">李先生</div>
+											<div class="detaile">四川省 成都市 郫县</div>
+											<div class="detaile">犀浦镇龙腾小区5-1-2</div>
+											<div class="number-phone">139****8872</div>
+										</div>
+										<div class="addr-operate">
+											<a href="javascript:void(0)" class="address-edit color" data-address-id="570" title="修改地址">修改</a>
+											<a href="javascript:void(0)" class="address-delete color" data-address-id="570" title="删除地址">删除</a>
+											<!-- 默认地址一直显示用span标签 -->
+											<span class="deftip">默认地址</span>
+										</div>
+									</div>
+								</div>
+								<div class="addr-control">
+
+									<a href="javascript:void(0)" class="addr-add" title="增加新地址">
+										<i>+</i>
+										<span>使用新地址</span>
+									</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 送货时间 -->
+					<div class="time-container border-line">
+						<div class="main-content">
+							<h2 class="title">
+			送货时间
+			<span>送货时间仅供参考，快递公司会尽量满足您的要求</span>
+		</h2>
+							<div class="delivery-time clearfix">
+								<!-- 选中的送货时间 给下面的div增加class值"active" 也就是class="box active" _star-->
+
+								<div class="box active">
+									<label>
+					<input type="radio" data="" class="best_time" name="best_time" value="0" checked="">
+					<span>工作日/周末/假日均可</span>
+				</label>
+								</div>
+
+								<div class="box ">
+									<label>
+					<input type="radio" data="" class="best_time" name="best_time" value="1">
+					<span>仅周末送货</span>
+				</label>
+								</div>
+
+								<div class="box ">
+									<label>
+					<input type="radio" data="" class="best_time" name="best_time" value="2">
+					<span>仅工作日送货</span>
+				</label>
+								</div>
+
+								<div class="box box-spe ">
+									<label>
+					<input type="radio" data="1" name="best_time" value="3" id="set_best_time">
+					<span>指定送货时间</span>
+					<font class="best-time-desc color"></font>
+				</label>
+
+									<!-- 指定送货具体时间 _star-->
+									<div class="seltimebox" id="seltimebox">
+										<table cellpadding="0" cellspacing="0" width="100%">
+											<tbody>
+												<tr>
+													<td>
+														<span>时间段</span>
+													</td>
+													<td align="center">
+														<span>
+									01-21
+									<br>
+									今天
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-22
+									<br>
+									周日
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-23
+									<br>
+									周一
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-24
+									<br>
+									周二
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-25
+									<br>
+									周三
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-26
+									<br>
+									周四
+								</span>
+													</td>
+													<td align="center">
+														<span>
+									01-27
+									<br>
+									周五
+								</span>
+													</td>
+
+												</tr>
+												<tr>
+													<td>
+														<span>9:00--15:00</span>
+													</td>
+													<td align="center">&nbsp;</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-22周日:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-23周一:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-24周二:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-25周三:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-26周四:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-27周五:9:00--15:00" class="set_time ">可选</a>
+													</td>
+
+												</tr>
+												<tr>
+													<td>
+														<span>15:00--19:00</span>
+													</td>
+													<td align="center">&nbsp;</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-22周日:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-23周一:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-24周二:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-25周三:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-26周四:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-27周五:15:00--19:00" class="set_time ">可选</a>
+													</td>
+
+												</tr>
+												<tr>
+													<td>
+														<span>19:00--22:00</span>
+													</td>
+													<td align="center">
+														<a href="javascript:void(0);" data="01-21今天:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-22周日:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-23周一:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-24周二:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-25周三:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-26周四:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+													<td align="center">
+														<a href="javascript:void(0);" data="01-27周五:19:00--22:00" class="set_time ">可选</a>
+													</td>
+
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- 指定送货具体时间 _end-->
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- 所有店铺商品清单 -->
+					<div class="goods-list border-line">
+						<div class="main-content">
+							<h2 class="title">商品清单</h2>
+							<div class="order-goods">
+								<!-- 根据店铺对商品进行拆单 每个table是一个店铺的商品 _star-->
+								<table cellpadding="0" cellspacing="0" border="0" width="100%" class="order-goods-list">
+									<tbody>
+										<tr>
+											<th class="goods-title">
+												<div class="order-body">
+													<div class="shop">
+														<div class="shop-info">
+															<span class="shop-icon">
+										<img src="./img/test/shop-icon2.png">
+									</span>
+															<span class="shop-name">店铺：</span>
+															<a href="http://www.itsource.cn/shop/7.html" target="_blank" title="">爱购物官方自营一号店</a>
+															<span class="shop-customer">
+										<!-- 客服 -->
+										
+										
+										
+										
+										
+										<a href="javascript:;" class="ww-light service-online" data-shop_id="7"><img src="./img/test/openim.png" width="20" height="20" border="0" alt="在线客服"></a>
+
+										
+									</span>
+														</div>
+													</div>
+												</div>
+											</th>
+											<th class="goods-price">单价（元）</th>
+											<th class="goods-amount">数量</th>
+											<th class="goods-sum">小计(元)</th>
+											<th class="goods-postage">配送方式</th>
+										</tr>
+										<tr>
+											<td colspan="4" class="goods-content">
+												<table cellpadding="0" cellspacing="0" border="0" width="100%">
+													<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _star-->
+													<tbody>
+														<tr class="goods_34 ">
+															<td class="goods-img">
+																<a href="http://www.itsource.cn/254" title="" target="_blank" class="img">
+																	<img src="./img/test/TB1myctOXXXXXbYXXXXXXXXXXXX_!!0-item_pic.jpg" width="50" height="50">
+																</a>
+
+															</td>
+															<td class="goods-master">
+																<p class="item-title">
+																	<a href="http://www.itsource.cn/254.html" target="_blank" title="老街口 焦糖/山核桃味/红枣瓜子500g零食坚果炒货干货葵花籽特产红枣口味">
+
+																		老街口 焦糖/山核桃味/红枣瓜子500g零食坚果炒货干货葵花籽特产红枣口味
+																	</a>
+																</p>
+																<div class="item-other-info">
+																	<div class="promo-logos"></div>
+																	<div class="item-icon-list">
+																		<div class="item-icons">
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+															<td class="goods-attr">
+																<p class="sku-line">食品口味:红枣口味</p>
+															</td>
+															<td class="goods-price">￥13.90</td>
+															<td class="goods-amount">1</td>
+															<td class="goods-sum">
+																<p class="sum second-color">￥13.90</p>
+															</td>
+														</tr>
+														<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _end-->
+													</tbody>
+												</table>
+												<table cellpadding="0" cellspacing="0" border="0" width="100%">
+													<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _star-->
+													<tbody>
+														<tr class="goods_69 ">
+															<td class="goods-img">
+																<a href="http://www.itsource.cn/891" title="" target="_blank" class="img">
+																	<img src="./img/test/TB1WC_WMVXXXXaLaXXXXXXXXXXX_!!0-item_pic.jpg" width="50" height="50">
+																</a>
+
+															</td>
+															<td class="goods-master">
+																<p class="item-title">
+																	<a href="http://www.itsource.cn/891.html" target="_blank" title="良品铺子甘栗仁小栗子仁板栗仁零食坚果干果炒货休闲食品糖炒板栗原味80g*3袋">
+
+																		良品铺子甘栗仁小栗子仁板栗仁零食坚果干果炒货休闲食品糖炒板栗原味80g*3袋
+																	</a>
+																</p>
+																<div class="item-other-info">
+																	<div class="promo-logos"></div>
+																	<div class="item-icon-list">
+																		<div class="item-icons">
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+															<td class="goods-attr">
+																<p class="sku-line">食品口味:原味80g*3袋</p>
+															</td>
+															<td class="goods-price">￥19.90</td>
+															<td class="goods-amount">1</td>
+															<td class="goods-sum">
+																<p class="sum second-color">￥19.90</p>
+															</td>
+														</tr>
+														<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _end-->
+													</tbody>
+												</table>
+												<table cellpadding="0" cellspacing="0" border="0" width="100%">
+													<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _star-->
+													<tbody>
+														<tr class="goods_80 ">
+															<td class="goods-img">
+																<a href="http://www.itsource.cn/917" title="" target="_blank" class="img">
+																	<img src="./img/test/TB1lewkJpXXXXbwXFXXXXXXXXXX_!!0-item_pic.jpg" width="50" height="50">
+																</a>
+
+															</td>
+															<td class="goods-master">
+																<p class="item-title">
+																	<a href="http://www.itsource.cn/917.html" target="_blank" title="【周黑鸭旗舰店_锁鲜】气调盒装卤鸭脖320g 武汉特产食品零食小吃">
+
+																		【周黑鸭旗舰店_锁鲜】气调盒装卤鸭脖320g 武汉特产食品零食小吃
+																	</a>
+																</p>
+																<div class="item-other-info">
+																	<div class="promo-logos"></div>
+																	<div class="item-icon-list">
+																		<div class="item-icons">
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+															<td class="goods-attr">
+															</td>
+															<td class="goods-price">￥36.80</td>
+															<td class="goods-amount">1</td>
+															<td class="goods-sum">
+																<p class="sum second-color">￥36.80</p>
+															</td>
+														</tr>
+														<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _end-->
+													</tbody>
+												</table>
+												<table cellpadding="0" cellspacing="0" border="0" width="100%">
+													<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _star-->
+													<tbody>
+														<tr class="goods_1933 ">
+															<td class="goods-img">
+																<a href="http://www.itsource.cn/35530" title="" target="_blank" class="img">
+																	<img src="./img/test/TB1jJRoNFXXXXb6XFXXYXGcGpXX_M2.SS2" width="50" height="50">
+																</a>
+
+															</td>
+															<td class="goods-master">
+																<p class="item-title">
+																	<a href="http://www.itsource.cn/35530.html" target="_blank" title="天天特价包包2016新款秋冬斜挎包韩版手提包流苏贝壳包女包单肩包">
+
+																		天天特价包包2016新款秋冬斜挎包韩版手提包流苏贝壳包女包单肩包
+																	</a>
+																</p>
+																<div class="item-other-info">
+																	<div class="promo-logos"></div>
+																	<div class="item-icon-list">
+																		<div class="item-icons">
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+															<td class="goods-attr">
+																<p class="sku-line">颜色分类:黑色款</p>
+															</td>
+															<td class="goods-price">￥29.99</td>
+															<td class="goods-amount">1</td>
+															<td class="goods-sum">
+																<p class="sum second-color">￥29.99</p>
+															</td>
+														</tr>
+														<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _end-->
+													</tbody>
+												</table>
+												<table cellpadding="0" cellspacing="0" border="0" width="100%">
+													<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _star-->
+													<tbody>
+														<tr class="goods_3039 ">
+															<td class="goods-img">
+																<a href="http://www.itsource.cn/68501" title="" target="_blank" class="img">
+																	<img src="./img/test/TB2d7ygdlyN.eBjSZFkXXb8YFXa_!!1732113555.jpg" width="50" height="50">
+																</a>
+
+															</td>
+															<td class="goods-master">
+																<p class="item-title">
+																	<a href="http://www.itsource.cn/68501.html" target="_blank" title="自粘墙纸贴画创意电视背景墙砖纹壁纸3d立体墙贴客厅卧室装饰贴纸">
+
+																		自粘墙纸贴画创意电视背景墙砖纹壁纸3d立体墙贴客厅卧室装饰贴纸
+																	</a>
+																</p>
+																<div class="item-other-info">
+																	<div class="promo-logos"></div>
+																	<div class="item-icon-list">
+																		<div class="item-icons">
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+															<td class="goods-attr">
+																<p class="sku-line">颜色分类:灰色 二代灰色68*75cm</p>
+																<p class="sku-line">尺寸/加工方式:大</p>
+															</td>
+															<td class="goods-price">￥11.80</td>
+															<td class="goods-amount">1</td>
+															<td class="goods-sum">
+																<p class="sum second-color">￥11.80</p>
+															</td>
+														</tr>
+														<!-- 如果该商品有赠品，那么当前商品的tr的class="have-gift" _end-->
+													</tbody>
+												</table>
+											</td>
+											<td class="goods-postage">
+												<div class="postage">
+													<label>
+		<input type="radio" name="" value="" checked="checked">
+		<span>普通配送</span>
+	</label>
+													<select class="shipping-select" data-shop-id="7">
+														<option value="0" selected="">普通快递 包邮</option>
+													</select>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" class="goods-annex">
+												<div class="memo">
+													<span>买家留言：</span>
+													<div class="buyer-msg">
+														<textarea class="text postscript" data-shop-id="7" placeholder="选填，可填写您与卖家达成一致的要求"></textarea>
+													</div>
+												</div>
+											</td>
+											<td colspan="3" class="goods-bill" id="shop_count_7">
+												<div class="bill">
+													<div class="order-pay">
+														店铺合计
+														<span>(含运费)</span> ：
+														<strong class="second-color SZY-SHOP-ORDER-AMOUNT-7" data-shop-id="7">￥112.39</strong>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- 根据店铺对商品进行拆单 每个table是一个店铺的商品 _end-->
+
+							</div>
+						</div>
+					</div>
+					<!-- 平台红包 -->
+					<!-- 
+<div class="real-pay">
+	<span class="hd">应付总额：</span>
+	<span class="bd color SZY-ORDER-AMOUNT"></span>
+</div>
+ -->
+					<!-- <div class="obtain-point">
+	可获得积分：
+	<span>
+		<strong></strong>
+		点
+	</span>
+</div> -->
+
+					<!-- 发票信息 -->
+					<div class="invoice-info border-line">
+						<div class="main-content">
+							<h2 class="title">发票信息</h2>
+							<div class="invoice-content">
+								<!-- 
+			<label>
+				<input type="checkbox" value="" id="invoice" checked="checked"/>
+				<span>索要发票</span>
+			</label>
+			 -->
+								<!-- 发票详细信息 _star -->
+								<div class="inv-info">
+
+									<span>不开发票</span>
+
+									<a class="modify color" href="javascript:void(0);">修改</a>
+								</div>
+								<!-- 发票详细信息 _end -->
+								<!-- 发票信息备注 _star -->
+								<div class="no-invoice-goods clearfix">
+									<div class="fl">备注：</div>
+									<div class="fl">
+										<span>交易单</span>
+										<a href="javascript:void(0);" class="inv-mark-pro">
+											<span>
+							如下商品
+							<i></i>
+						</span>
+											<div class="inv-pro-list">
+												<ul>
+													<li>
+														<div class="inv-pro-img">
+															<img src="./img/test/TB1myctOXXXXXbYXXXXXXXXXXXX_!!0-item_pic(1).jpg">
+														</div>
+														<div class="inv-pro-info">
+															<div>老街口 焦糖/山核桃味/红枣瓜子500g零食坚果炒货干货葵花籽特产红枣口味</div>
+															<p>店铺： 爱购物官方自营一号店</p>
+														</div>
+													</li>
+													<li>
+														<div class="inv-pro-img">
+															<img src="./img/test/TB1WC_WMVXXXXaLaXXXXXXXXXXX_!!0-item_pic(1).jpg">
+														</div>
+														<div class="inv-pro-info">
+															<div>良品铺子甘栗仁小栗子仁板栗仁零食坚果干果炒货休闲食品糖炒板栗原味80g*3袋</div>
+															<p>店铺： 爱购物官方自营一号店</p>
+														</div>
+													</li>
+													<li>
+														<div class="inv-pro-img">
+															<img src="./img/test/TB1lewkJpXXXXbwXFXXXXXXXXXX_!!0-item_pic(1).jpg">
+														</div>
+														<div class="inv-pro-info">
+															<div>【周黑鸭旗舰店_锁鲜】气调盒装卤鸭脖320g 武汉特产食品零食小吃</div>
+															<p>店铺： 爱购物官方自营一号店</p>
+														</div>
+													</li>
+													<li>
+														<div class="inv-pro-img">
+															<img src="./img/test/TB2pFFMdduO.eBjSZFCXXXULFXa_!!131276599.jpg">
+														</div>
+														<div class="inv-pro-info">
+															<div>天天特价包包2016新款秋冬斜挎包韩版手提包流苏贝壳包女包单肩包黑色款</div>
+															<p>店铺： 爱购物官方自营一号店</p>
+														</div>
+													</li>
+													<li>
+														<div class="inv-pro-img">
+															<img src="./img/test/TB2Gg9fXOgSXeFjy0FcXXahAXXa_!!1732113555.jpg">
+														</div>
+														<div class="inv-pro-info">
+															<div>自粘墙纸贴画创意电视背景墙砖纹壁纸3d立体墙贴客厅卧室装饰贴纸灰色 二代灰色68*75cm 大</div>
+															<p>店铺： 爱购物官方自营一号店</p>
+														</div>
+													</li>
+												</ul>
+											</div>
+											<div class="inv-mark"></div>
+										</a>
+										<span>暂不支持开具发票。</span>
+									</div>
+								</div>
+								<!-- 发票信息备注 _end -->
+							</div>
+						</div>
+					</div>
+
+					<!-- 支付方式 -->
+					<div class="pay-type border-line">
+						<div class="main-content">
+							<h2 class="title">支付方式</h2>
+							<div class="pay-type-content">
+								<!-- 积分支付 start -->
+
+								<!-- 积分支付 end -->
+
+								<!-- 余额支付 start -->
+
+								<!-- 余额支付后面显示的应付款信息 -->
+								<p class="surplus-pay" id="balance_money_pay">
+									剩余应付金额
+									<strong class="second-color SZY-ORDER-MONEY-PAY">￥112.39</strong> 请选择以下支付方式支付
+								</p>
+
+								<!-- 银行支付方式调用 start -->
+								<div class="pay-all" id="pay_bank">
+
+									<ul id="paylist" class="payment-tab">
+
+										<!-- 货到付款特殊处理 -->
+
+										<!-- 货到付款特殊处理 -->
+										<li class="clearfix">
+											<label>
+			<input type="radio" id="pac_code_1" name="pay_code" class="pay_code" value="alipay">
+			<span class="payment-name">支付宝</span>
+		</label>
+										</li>
+
+										<!-- 货到付款特殊处理 -->
+										<li class="clearfix">
+											<label>
+			<input type="radio" id="pac_code_2" name="pay_code" class="pay_code" value="union">
+			<span class="payment-name">银联支付</span>
+		</label>
+										</li>
+
+										<!-- 货到付款特殊处理 -->
+										<li class="clearfix">
+											<label>
+			<input type="radio" id="pac_code_3" name="pay_code" class="pay_code" value="weixin">
+			<span class="payment-name">微信支付</span>
+		</label>
+										</li>
+
+									</ul>
+
+								</div>
+								<!-- 银行支付方式调用 end -->
+							</div>
+						</div>
+					</div>
+					<!-- 提交订单 -->
+					<div class="confirm-pay bottom" id="checkout_amount">
+
+						<div class="total-count">
+							<div class="total-count-pay">
+								<div class="total-count-pay-info">
+									<span class="first">
+				订单总额：
+				<span class="SZY-ORDER-AMOUNT">￥112.39</span>
+									</span>
+								</div>
+								<div class="total-count-pay-info">
+									<span>
+				商品总额：
+				<span class="SZY-GOODS-AMOUNT">￥112.39</span>
+									</span>
+									<em>+</em>
+									<span>
+				运费：
+				<span class="SZY-SHIPPING-FEE-AMOUNT">￥0.00</span>
+									</span>
+									<span class="SZY-ORDER-CASH-MORE-AMOUNT" style="display: none;">
+				<em>+</em>
+				<span>
+					货到付款加价：
+					<span>￥0.00</span>
+									</span>
+									</span>
+									<em>-</em>
+									<span>
+				红包：
+				<span class="SZY-ORDER-BONUS-AMOUNT">￥0.00</span>
+									</span>
+									<em>-</em>
+									<span>
+				优惠：
+				<span class="">￥0</span>
+									</span>
+									<em>-</em>
+									<span>
+				余额：
+				<span class="SZY-ORDER-BALANCE">￥0.00</span>
+									</span>
+									<em>=</em>
+									<span class="end second-color">
+				应付款：
+				<span class="SZY-ORDER-MONEY-PAY">￥112.39</span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="back-to-cart fl">
+							<a href="http://www.itsource.cn/cart" title="返回购物车列表" class="color">返回修改购物车</a>
+						</div>
+						<div class="submit-box fr">
+							<!--<div class="price-box fl">
+		<span>应付总额：</span>
+		<span class="price color SZY-ORDER-AMOUNT">￥112.39</span>
+	</div>-->
+
+							<div class="fr">
+								<a href="javascript:void(0);" class="submit-btn gopay bg-color">确认交易</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- 新增地址弹框 -->
+				<div class="bomb-box addr-box">
+					<div class="box-title">使用新地址</div>
+					<div class="box-oprate addr-box-oprate"></div>
+					<div class="content-info" id="edit-address-div"></div>
+				</div>
+
+				<!-- 发票信息弹框 -->
+				<div class="bomb-box invoice-box">
+					<div class="box-title">发票信息</div>
+					<div class="box-oprate invoice-box-oprate"></div>
+					<div class="content-info">
+						<div class="tab-nav">
+							<ul>
+
+								<li class="tab-nav-item  tab-item-selected" data-invoice-type="0" data-invoice-name="不开发票">
+									不开发票
+									<b></b>
+								</li>
+
+								<li class="tab-nav-item disabled " data-invoice-type="1" data-invoice-name="普通发票">
+									普通发票
+									<b></b>
+								</li>
+
+								<li class="tab-nav-item disabled " data-invoice-type="2" data-invoice-name="增值税发票">
+									增值税发票
+									<b></b>
+								</li>
+
+							</ul>
+						</div>
+						<!-- 普通税发票 _star -->
+
+						<form id="invoice_type_0" action="http://www.itsource.cn/checkout.html" method="post" class="form-horizontal">
+							<div class="act">
+								<input type="button" value="保存发票信息" id="inv_submit">
+								<input type="button" value="取消" class="m-l-10" id="inv_cancle">
+							</div>
+						</form>
+						<!-- 增值税发票 _end -->
+
+						<!-- 增值税发票 _end -->
+
+						<!-- 增值税发票 _end -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 付款信息弹框 -->
+		<div class="bomb-box payment-box">
+			<div class="box-title">请付款</div>
+			<div class="content-info">
+				<p class="warning">
+					<i></i>
+					<span>请您在新打开的页面上完成付款。</span>
+				</p>
+				<p class="prompt">付款完成前请不要关闭此窗口</p>
+				<p class="prompt">完成付款后请根据您的情况点击下面的按钮</p>
+				<p class="btns">
+					<a href="http://www.itsource.cn/checkout/result.html" class="pay_result">已完成付款</a>
+					<a href="http://www.itsource.cn/checkout/result.html" class="m-l-10 pay_result">付款遇到问题</a>
+				</p>
+				<!-- <p class="back">
+				<a href="/user/result/pay.html" title="返回选择其他的支付方式" class="color">&gt;&gt; 返回选择其他的支付方式</a>
+			</p> -->
+			</div>
+		</div>
+
+		<!-- 引入底部文件 -->
+
+		<!-- 底部 _start-->
+
+		<div class="site-footer">
+
+			<div class="footer-related">
+
+				<div class="footer-info">
+					<div class="info-text">
+						<!-- 底部导航 -->
+						<p class="nav-bottom">
+
+						</p>
+						<p>
+							Copyright 源码时代(www.itsource.cn) 版权所有
+							<a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备88888888号</a>
+						</p>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+		<script type="text/javascript" src="js/checkout.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/szy.cart.js"></script>
+		<script type="text/javascript" src="js/jquery.region.js"></script>
+		<!-- 表单验证 -->
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.custom.js"></script>
+		<script type="text/javascript" src="js/messages_zh.js"></script>
+	</body>
+
+</html>

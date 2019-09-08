@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/hrm_course_web/hrm_course_web.iml" filepath="$PROJECT_DIR$/hrm_course_web/hrm_course_web.iml" />
       <module fileurl="file://$PROJECT_DIR$/hrm_plat_web/hrm_plat_web.iml" filepath="$PROJECT_DIR$/hrm_plat_web/hrm_plat_web.iml" />
     </modules>
   </component>

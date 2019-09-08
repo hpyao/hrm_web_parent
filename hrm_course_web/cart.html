@@ -1,0 +1,1159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 8]> <html lang="zh-CN" class="ie8"> <![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>购物车 - 爱购网-（www.ilovebuy.com）网购首选</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<link type="text/css" rel="stylesheet" href="css/common.css" />
+		<link type="text/css" rel="stylesheet" href="css/flow.css" />
+		<!--整站改色 _start-->
+		<link type="text/css" rel="stylesheet" href="css/color-style.css" />
+		<!--整站改色 _end-->
+		<!-- 网站头像 -->
+		<link type="text/css" rel="stylesheet" href="css/iconfont.css">
+		<link rel="stylesheet" href="css/layer.css" id="layuicss-skinlayercss">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/jquery.lazyload.js"></script>
+	</head>
+
+	<body>
+		<div class="as-shelter"></div>
+
+		<!-- 站点选择 -->
+		<div class="header-top">
+			<div class="header-box">
+
+				<!-- 站点 -->
+				<!--站点 start-->
+				<div class="SZY-SUBSITE">
+
+				</div>
+				<!--站点 end-->
+				<font id="login-info" class="login-info SZY-USER-NOT-LOGIN">
+					<a class="login color" href="login.html" target="_top">请登录</a>
+					<a class="register" href="register.html" target="_top">免费注册</a>
+				</font>
+				<font id="login-info" class="login-info SZY-USER-ALREADY-LOGIN" style="display: none;">
+					<em>
+		<a href="user.html" target="_blank" class="color SZY-USER-NAME"></a>
+		<!--欢迎您回来!-->
+	</em>
+					<a href="site/logout" data-method="post">退出</a>
+				</font>
+
+				<ul>
+					<li>
+						<a class="menu-hd home" href="" target="_top">
+							<i></i> 爱购首页
+						</a>
+					</li>
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd myinfo" href="user.html" target="_blank">
+								<i></i> 会员中心
+								<b></b>
+							</a>
+							<div id="menu-2" class="menu-bd" style="display: none;">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<a href="user/order.html" target="_blank">我的宝贝</a>
+									<a href="user/address.html" target="_blank">我的地址</a>
+									<a href="user/collect/goods.html" target="_blank">我的收藏</a>
+									<a href="user/collect/shop.html" target="_blank">关注店铺</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="menu-item cartbox">
+						<div class="menu">
+							<a class="menu-hd cart" href="cart.html" target="_top">
+								<i></i> 购物车
+								<span class="SZY-CART-COUNT">0</span>
+								<b></b>
+							</a>
+							<div id="menu-4" class="menu-bd cart-box-main">
+								<span class="menu-bd-mask"></span>
+								<div class="dropdown-layer">
+									<div class="spacer"></div>
+									<div class="dropdown-layer-con cartbox-goods-list">
+
+										<!-- 正在加载 -->
+										<div class="cart-type">
+											<i class="cart-type-icon"></i>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a class="menu-hd we-chat" href="" target="_top">
+								<i></i> 关注爱购
+								<b></b>
+							</a>
+							<div id="menu-5" class="menu-bd we-chat-qrcode">
+								<span class="menu-bd-mask"></span>
+								<a target="_top">
+									<img src="img/test/mall_wx_qrcode_0.jpg" alt="官方微信">
+								</a>
+								<p class="font-14">关注官方微信</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="menu-item">
+						<div class="menu">
+							<a href="" class="menu-hd site-nav" target="_blank">
+								更多支持
+								<b></b>
+							</a>
+							<div id="menu-7" class="menu-bd site-nav-main">
+								<span class="menu-bd-mask"></span>
+								<div class="menu-bd-panel">
+									<div class="site-nav-con">
+
+										<a href="article/info?id=38" target="_blank" title="新手上路">新手上路</a>
+
+										<a href="article/info?id=38" target="_blank" title="支付方式">支付方式</a>
+
+										<a href="article/list/3.html" target="_blank" title="配送服务">配送服务</a>
+
+										<a href="article/list/4.html" target="_blank" title="售后服务">售后服务</a>
+
+										<a href="article/info?id=38" target="_blank" title="商家合作">商家合作</a>
+
+										<a href="list.html?cat_id=17" target="_blank" title="店铺街">店铺街</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".SZY-SEARCH-BOX-TOP .SZY-SEARCH-BOX-SUBMIT-TOP").click(function() {
+					if($(".search-li-top.curr").attr('num') == 0) {
+						var keyword_obj = $(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-KEYWORD");
+
+						var keywords = $(keyword_obj).val();
+						if($.trim(keywords).length == 0 || $.trim(keywords) == "请输入关键词") {
+							keywords = $(keyword_obj).data("searchwords");
+						}
+						$(keyword_obj).val(keywords);
+					}
+					$(this).parents(".SZY-SEARCH-BOX-TOP").find(".SZY-SEARCH-BOX-FORM").submit();
+				});
+			});
+		</script>
+
+		<div class="header">
+			<div class="w1210">
+				<div class="logo-info">
+					<a href="/" class="logo">
+						<img src="img/test/mall_logo_0.png" />
+					</a>
+					<!-- logo右侧小广告 _start -->
+					<a href="#" class="logo-right">
+						<img src="img/test/mall_logo_right_ad_image_0.png" />
+					</a>
+					<!-- logo右侧小广告 _end -->
+				</div>
+				<div class="search SZY-SEARCH-BOX">
+					<form class="search-form SZY-SEARCH-BOX-FORM" method="get" action="/search.html">
+						<div class="search-info">
+							<div class="search-type-box">
+								<ul class="search-type">
+									<li class="search-li curr" num="0">商品</li>
+									<li class="search-li" num="1">店铺</li>
+								</ul>
+								<i></i>
+							</div>
+							<div class="search-box">
+								<div class="search-box-con">
+									<input type="text" class="keyword search-box-input SZY-SEARCH-BOX-KEYWORD" name="keyword" tabindex="9" autocomplete="off" data-searchwords="女装" placeholder="元旦,女装5折狂甩" value="" />
+								</div>
+							</div>
+							<input type='hidden' id="searchtype" name='type' value="0" class="searchtype" />
+							<input type="button" id="btn_search_box_submit" class="button bg-color btn_search_box_submit SZY-SEARCH-BOX-SUBMIT" />
+						</div>
+						<!---热门搜索热搜词显示--->
+
+						<div class="search-results hide SZY-SEARCH-BOX-HELPER">
+							<ul class="history-results">
+								<li class="title">
+									<span>最近搜索</span>
+									<a href="javascript:void(0);" class="clear-history clear">
+										<i></i> 清空
+									</a>
+								</li>
+								<!---->
+							</ul>
+							<ul class="rec-results">
+								<li class="title">
+									<span>正在热搜中</span>
+									<i class="close"></i>
+								</li>
+
+								<li>
+									<a target="_blank" href="search.html?keyword=女装" title="女装">女装</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="search.html?keyword=9.9" title="9.9">9.9</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="search.html?keyword=iphone7" title="iphone7">iphone7</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="search.html?keyword=女装" title="女装">女装</a>
+								</li>
+
+								<li>
+									<a target="_blank" href="search.html?keyword=暖手宝" title="暖手宝">暖手宝</a>
+								</li>
+
+							</ul>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function() {
+								// 搜索框提示显示
+								$('.SZY-SEARCH-BOX .SZY-SEARCH-BOX-KEYWORD').focus(function() {
+									$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-HELPER").show();
+								});
+								// 搜索框提示隐藏
+								$(".SZY-SEARCH-BOX-HELPER .close").on('click', function() {
+									$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-HELPER").hide();
+								});
+								// 清除记录
+								$(".SZY-SEARCH-BOX-HELPER .clear").click(function() {
+									var url = '/search/clear-record.html';
+									$.post(url, {}, function(result) {
+										if(result.code == 0) {
+											$(".history-results .active").empty();
+										} else {}
+									}, 'json');
+								});
+							});
+
+							function search_box_remove(key) {
+								var url = '/search/delete-record.html';
+								$.post(url, {
+									data: key
+								}, function(result) {
+									if(result.code == 0) {
+										$("#" + key).css("display", "none");
+									} else {
+
+									}
+								}, 'json');
+							}
+							$(document).on("click", function(e) {
+								var target = $(e.target);
+								if(target.closest(".SZY-SEARCH-BOX").length == 0) {
+									$('.SZY-SEARCH-BOX-HELPER').hide();
+								}
+							})
+						</script>
+					</form>
+					<ul class="hot-query">
+						<!-- 默认搜索词 -->
+
+						<li class="first">
+							<a href="http://www.itsource.cn/search.html?keyword=潮男" title="潮男">潮男</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=打底衫" title="打底衫">打底衫</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=牛肉干" title="牛肉干">牛肉干</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=水果" title="水果">水果</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=苹果7" title="苹果7">苹果7</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=数据线" title="数据线">数据线</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=打底裤" title="打底裤">打底裤</a>
+						</li>
+
+						<li>
+							<a href="http://www.itsource.cn/search.html?keyword=" title=""></a>
+						</li>
+
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				$(".SZY-SEARCH-BOX .SZY-SEARCH-BOX-SUBMIT").click(function() {
+					if($(".search-li.curr").attr('num') == 0) {
+						var keyword_obj = $(this).parents(".SZY-SEARCH-BOX").find(".SZY-SEARCH-BOX-KEYWORD");
+
+						var keywords = $(keyword_obj).val();
+						if($.trim(keywords).length == 0 || $.trim(keywords) == "请输入关键词") {
+							keywords = $(keyword_obj).data("searchwords");
+						}
+						$(keyword_obj).val(keywords);
+					}
+					$(this).parents(".SZY-SEARCH-BOX").find(".SZY-SEARCH-BOX-FORM").submit();
+				});
+			});
+		</script>
+
+
+		<script type="text/javascript" src="js/cart.js" ></script>
+		<div class="w990" id="content">
+			<div class="content">
+				<div class="cart-filter-bar">
+					<div class="switch-cart" id="cart_num">
+						<!-- 购物车数量 -->
+
+						<span class="color">
+	我的购物车
+	<em class="color">2</em>
+</span>
+
+					</div>
+				</div>
+				<div class="cart-main">
+					<div class="cart-table-th">
+						<div class="wp">
+							<div class="th th-chk">
+								<div class="select-all">
+									<div class="cart-checkbox all-checkbox">
+										<!-- <input type="checkbox" name="" value="true"> -->
+										<label for="">勾选购物车内所有商品</label>
+										<span>&nbsp;&nbsp;全选</span>
+									</div>
+								</div>
+							</div>
+							<div class="th th-item">
+								<div class="td-inner">商品信息</div>
+							</div>
+							<div class="th th-info">
+								<div class="td-inner">&nbsp;</div>
+							</div>
+							<div class="th th-price">
+								<div class="td-inner">单价（元）</div>
+							</div>
+							<div class="th th-amount">
+								<div class="td-inner">数量</div>
+							</div>
+							<div class="th th-sum">
+								<div class="td-inner">金额（元）</div>
+							</div>
+							<div class="th th-op">
+								<div class="td-inner">操作</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="cart_list">
+						<!-- 各个店铺下的信息 -->
+
+						<div id="cart_shop_5" class="order-body">
+
+							<div class="shop">
+								<div class="shop-info">
+									<div class="cart-checkbox shop-checkbox " data-shop-id="5">
+										<!-- <input type="checkbox" name="" value=""> -->
+										<label for="">勾选此店铺下所有商品</label>
+									</div>
+									&nbsp;&nbsp;
+
+									<span class="shop-icon">
+			<img src="img/test/shop-icon2.png" />
+		</span>
+									<span class="shop-name">店铺：</span>
+									<a href='javascript:;' title="爱购物官方自营三号店">爱购物官方自营三号店</a>
+									<!-- 客服 -->
+									<span class="shop-customer">
+			<a href="javascript:;" class="ww-light" data-shop_id="5"><img src="img/test/openim.png" width="20" height="20" border="0" alt="在线客服"></a>
+
+			
+		</span>
+									<!-- 促销活动红包 -->
+
+								</div>
+							</div>
+							<div class="order-content">
+								<div class="item-list">
+									<div class="bundle bundle-last">
+										<!-- 购物车中商品列表 -->
+										<div class="item-holder" id="cartid1357">
+
+											<div class="item-body    ">
+												<ul class="item-content clearfix goods_1357_27128">
+													<li class="td td-chk">
+														<div class="td-inner">
+															<div class="cart-checkbox goods-checkbox " data-shop-id="5">
+
+																<input type="checkbox" name="checkbox" value="1357">
+																<label for="">勾选商品</label>
+															</div>
+														</div>
+													</li>
+													<li class="td td-item">
+														<div class="td-inner">
+															<div class="item-pic">
+																<a href="http://www.itsource.cn/27128" target="_blank" class="">
+																	<img src="http://68products.oss-cn-beijing.aliyuncs.com/taobao-yun-images/538778398513/TB2uekLbXHzQeBjSZFHXXbwZpXa_!!2995349161.jpg?x-oss-process=image/resize,m_pad,limit_0,h_220,w_220" class="itempic">
+																</a>
+															</div>
+															<div class="item-info">
+																<div class="item-basic-info">
+																	<a href="http://www.itsource.cn/27128.html" target="_blank" title="奥林格 ZX-200B6电热水壶304食品级不锈钢家用烧水壶双层自动断电" class="item-title">
+
+																		奥林格 ZX-200B6电热水壶304食品级不锈钢家用烧水壶双层自动断电
+																	</a>
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-info">
+														<div class="item-props">
+															<p class="sku-line">颜色分类:天蓝色</p>
+														</div>
+													</li>
+													<li class="td td-price">
+														<div class="td-inner">
+															<div class="item-price">
+																<div class="price-content">
+																	<div class="price-line">
+																		<em class="price-original">￥80.00</em>
+																	</div>
+																	<div class="price-line">
+																		<em class="price-now">￥29.90</em>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-amount">
+														<div class="td-inner">
+															<div class="amount-wrapper">
+																<div class="item-amount">
+																	<!--   -->
+																	<span class="amount-widget amount">
+							<input type="text" class="amount-input" value="1" data-goods-number="1" data-sku-id="27128" id="number1357" data-amount-min="1" data-amount-max="91460" maxlength="8" title="请输入购买量">
+							<span class="amount-btn">
+								<span class="amount-plus">
+									<i>+</i>
+								</span>
+																	<span class="amount-minus">
+									<i>-</i>
+								</span>
+																	</span>
+																	</span>
+																	
+
+																</div>
+
+																<div class="amount-msg" style="display:none">
+
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-sum">
+														<div class="td-inner">
+															<em class="number second-color">￥29.90</em>
+														</div>
+													</li>
+													<li class="td td-op">
+														<div class="td-inner">
+															<a href="javascript:void(0);" class="del" data-cart-id="1357">删除</a>
+														</div>
+													</li>
+												</ul>
+											</div>
+											<!-- 赠品 -->
+
+										</div>
+										<div class="item-holder" id="cartid1356">
+
+											<div class="item-body    last-item">
+												<ul class="item-content clearfix goods_1356_30349">
+													<li class="td td-chk">
+														<div class="td-inner">
+															<div class="cart-checkbox goods-checkbox " data-shop-id="5">
+
+																<input type="checkbox" name="checkbox" value="1356">
+																<label for="">勾选商品</label>
+															</div>
+														</div>
+													</li>
+													<li class="td td-item">
+														<div class="td-inner">
+															<div class="item-pic">
+																<a href="http://www.itsource.cn/30349" target="_blank" class="">
+																	<img src="http://68products.oss-cn-beijing.aliyuncs.com/taobao-yun-images/14344454654/TB2axlTau_yQeBjy0FlXXczrXXa_!!305081051.jpg?x-oss-process=image/resize,m_pad,limit_0,h_220,w_220" class="itempic">
+																</a>
+															</div>
+															<div class="item-info">
+																<div class="item-basic-info">
+																	<a href="http://www.itsource.cn/30349.html" target="_blank" title="禾诗电子称 体重秤家用电子秤人体秤体重称成人体重计精准称重仪" class="item-title">
+
+																		禾诗电子称 体重秤家用电子秤人体秤体重称成人体重计精准称重仪
+																	</a>
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-info">
+														<div class="item-props">
+															<p class="sku-line">颜色分类:粉色戴帽-隐屏款</p>
+														</div>
+													</li>
+													<li class="td td-price">
+														<div class="td-inner">
+															<div class="item-price">
+																<div class="price-content">
+																	<div class="price-line">
+																		<em class="price-original">￥118.00</em>
+																	</div>
+																	<div class="price-line">
+																		<em class="price-now">￥35.90</em>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-amount">
+														<div class="td-inner">
+															<div class="amount-wrapper">
+																<div class="item-amount">
+																	<!--   -->
+																	<span class="amount-widget amount">
+							<input type="text" class="amount-input" value="1" data-goods-number="1" data-sku-id="30349" id="number1356" data-amount-min="1" data-amount-max="5499" maxlength="8" title="请输入购买量">
+							<span class="amount-btn">
+								<span class="amount-plus">
+									<i>+</i>
+								</span>
+																	<span class="amount-minus">
+									<i>-</i>
+								</span>
+																	</span>
+																	</span>
+
+																</div>
+
+																<div class="amount-msg" style="display:none">
+
+																</div>
+															</div>
+														</div>
+													</li>
+													<li class="td td-sum">
+														<div class="td-inner">
+															<em class="number second-color">￥35.90</em>
+														</div>
+													</li>
+													<li class="td td-op">
+														<div class="td-inner">
+															<a href="javascript:void(0);" class="del" data-cart-id="1356">删除</a>
+														</div>
+													</li>
+												</ul>
+											</div>
+											<!-- 赠品 -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+				<!-- 购物车统计 -->
+				<div class="cart-foot">
+					<div class="cart-foot-wrapper">
+						<div class="select-all">
+							<div class="cart-checkbox all-checkbox">
+								<!-- <input type="checkbox" name="" value=""> -->
+								<label for="">勾选所有商品</label>
+								<span>&nbsp;&nbsp;全选</span>
+							</div>
+						</div>
+						<div class="operations">
+							<a href="javascript:void(0)" class="del">删除</a>
+							<!-- <a href="">分享</a> -->
+						</div>
+						<div class="cart-bar-right" id="cart_count">
+							<!-- 购物车金额 -->
+							<div class="amount-sum">
+								<span class="txt">已选商品</span>
+								<em class="second-color SZY-CART-SELECT-GOODS-NUMBER">0</em>
+								<span class="txt">件</span>
+							</div>
+							<div class="price-sum">
+								<span class="txt">合计（不含运费）:</span>
+								<strong class="price second-color SZY-CART-SELECT-GOODS-AMOUNT">￥0.00</strong>
+							</div>
+							<div class="btn-area">
+								<a href="javascript:void(0)" class="submit-btn">
+									<span>结 算</span>
+								</a>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="js/jquery.widget.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/tabs.js"></script>
+		<script type="text/javascript" src="js/cart.js"></script>
+
+		<!-- 结束：主要区域内容-->
+
+		<!-- 站点底部-->
+
+		<!-- 右侧边栏 _start -->
+		<div class="right-sidebar-con">
+			<div class="right-sidebar-main">
+				<div class="right-sidebar-panel">
+					<div id="quick-links" class="quick-links">
+						<ul>
+							<li class="quick-area quick-login sidebar-user-trigger">
+								<!-- 用户 -->
+								<a href="javascript:void(0);" class="quick-links-a">
+									<i class="setting"></i>
+								</a>
+								<div class="sidebar-user quick-sidebar">
+									<i class="arrow-right"></i>
+									<div class="sidebar-user-info">
+										<!-- 没有登录的情况 _start -->
+										<div class="SZY-USER-NOT-LOGIN" style="">
+											<div class="user-pic">
+												<div class="user-pic-mask"></div>
+												<img src="img/test/default_user_portrait_0.png">
+											</div>
+											<br>
+											<p>
+												你好！请
+												<a href="javascript:void(0);" class="quick-login-a color ajax-login">登录</a>
+												|
+												<a href="register.html" class="color">注册</a>
+											</p>
+										</div>
+										<!-- 没有登录的情况 _end -->
+										<!-- 有登录的情况 _start -->
+										<div class="SZY-USER-ALREADY-LOGIN" style="display: none;">
+											<div class="user-have-login">
+												<div class="user-pic">
+													<div class="user-pic-mask"></div>
+													<img src="" class="SZY-USER-PIC">
+												</div>
+												<div class="user-info">
+													<p>
+														用&nbsp;&nbsp;&nbsp;户：
+														<span class="SZY-USER-NAME"></span>
+													</p>
+
+												</div>
+											</div>
+											<p class="m-t-10">
+												<span class="prev-login">
+					上次登录时间：
+					<span class="SZY-USER-LAST-LOGIN"></span>
+												</span>
+												<a href="user.html" class="btn account-btn" target="_blank">个人中心</a>
+												<a href="user/order.html" class="btn order-btn" target="_blank">订单中心</a>
+											</p>
+										</div>
+										<!-- 有登录的情况 _end -->
+									</div>
+								</div>
+							</li>
+							<li class="sidebar-tabs">
+								<!-- 购物车 -->
+								<div class="cart-list quick-links-a sidebar-cartbox-trigger">
+									<i class="cart"></i>
+									<div class="span">购物车</div>
+									<span class="ECS_CARTINFO">
+								<span class="cart_num SZY-CART-COUNT">0</span>
+									<div class="sidebar-cart-box">
+										<h3 class="sidebar-panel-header">
+										<a href="javascript:void(0);" class="title">
+											<i class="cart-icon"></i>
+											<em class="title">购物车</em>
+										</a>
+										<span class="close-panel"></span>
+									</h3>
+									</div>
+									</span>
+								</div>
+							</li>
+							<li class="sidebar-tabs">
+								<a href="javascript:void(0);" class="mpbtn_history quick-links-a sidebar-historybox-trigger">
+									<i class="history"></i>
+								</a>
+								<div class="popup">
+									<font id="mpbtn_histroy">我看过的</font>
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<!-- 如果当前页面有对比功能 则显示对比按钮 _start-->
+							<li class="sidebar-tabs">
+								<a href="javascript:void(0);" class="mpbtn-contrast quick-links-a sidebar-comparebox-trigger">
+									<i class="contrast"></i>
+								</a>
+								<div class="popup">
+									对比商品
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<!-- 如果当前页面有对比功能 则显示对比按钮 _end-->
+							<li>
+								<a href="user/collect/shop.html" target="_blank" class="mpbtn_stores quick-links-a">
+									<i class="stores"></i>
+								</a>
+								<div class="popup">
+									我收藏的店铺
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+							<li id="collectGoods">
+								<a href="user/collect/goods.html" target="_blank" class="mpbtn_collect quick-links-a">
+									<i class="collect"></i>
+								</a>
+								<div class="popup">
+									我的收藏
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="quick-toggle">
+						<ul>
+
+							<li class="quick-area">
+								<a class="quick-links-a" href="javascript:void(0);">
+									<i class="customer-service"></i>
+								</a>
+								<div class="sidebar-service quick-sidebar">
+									<i class="arrow-right"></i>
+
+									<div class="customer-service">
+										<a target="_blank" href="#">
+											<span class="icon-qq"></span> QQ
+										</a>
+									</div>
+
+									<div class="customer-service">
+										<a target="_blank" href="#">
+											<span class="icon-ww"></span> 旺旺
+										</a>
+									</div>
+
+								</div>
+							</li>
+
+							<li class="quick-area">
+								<a class="quick-links-a" href="javascript:void(0);">
+									<i class="qr-code"></i>
+								</a>
+								<div class="sidebar-code quick-sidebar">
+									<i class="arrow-right"></i>
+									<img src="img/test/mall_wx_qrcode_0.jpg">
+								</div>
+							</li>
+							<li class="returnTop" style="display: none;">
+								<a href="javascript:void(0);" class="return_top quick-links-a">
+									<i class="top"></i>
+								</a>
+								<div class="popup">
+									返回顶部
+									<i class="arrow-right"></i>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="">
+					<!--红包 start-->
+					<!--红包 end-->
+					<!--购物车 start-->
+
+					<div class="right-sidebar-panels sidebar-cartbox">
+						<div class="sidebar-cart-box">
+							<h3 class="sidebar-panel-header">
+			<a href="javascript:void(0);" class="title" target="_blank">
+				<i class="cart-icon"></i>
+				<em class="title">购物车</em>
+			</a>
+			<span class="close-panel"></span>
+		</h3>
+							<div class="sidebar-cartbox-goods-list">
+
+								<div class="cart-panel-main">
+									<div class="cart-panel-content">
+
+										<!-- 没有商品的展示形式 _start -->
+										<div class="tip-box">
+											<i class="tip-icon"></i>
+											<div class="tip-text">
+												您的购物车里什么都没有哦
+												<br>
+												<a class="color" href="" title="再去看看吧" target="_blank">再去看看吧</a>
+											</div>
+										</div>
+										<!-- 没有商品的展示形式 _end-->
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!--购物车 end-->
+					<!--浏览历史 start-->
+					<!---->
+					<div class="right-sidebar-panels sidebar-historybox">
+						<h3 class="sidebar-panel-header">
+		<a href="javascript:;" class="title">
+			<i></i>
+			<em class="title">我的足迹</em>
+		</a>
+		<span class="close-panel"></span>
+	</h3>
+						<div class="sidebar-panel-main">
+							<div class="sidebar-panel-content sidebar-historybox-goods-list">
+								<!---->
+								<!---->
+								<!-- 没有浏览历史的展示形式 _start -->
+								<div class="tip-box">
+									<i class="tip-icon"></i>
+									<div class="tip-text">
+										您还没有在商城留下任何足迹哦
+										<br>
+										<a class="color" href="">赶快去看看吧</a>
+									</div>
+								</div>
+								<!-- 没有浏览历史的展示形式 _end-->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</div>
+					<!---->
+					<!--浏览历史 end-->
+					<!--对比列表 start-->
+
+					<!--对比列表 start-->
+					<div class="right-sidebar-panels sidebar-comparebox">
+						<h3 class="sidebar-panel-header">
+		<a href="javascript:void(0);" class="title">
+			<i class="compare-icon"></i>
+			<em class="title">宝贝对比</em>
+		</a>
+		<span class="close-panel"></span>
+	</h3>
+						<div>
+							<div class="sidebar-panel-main sidebar-comparebox-goods-list">
+
+								<div class="sidebar-panel-content compare-panel-content">
+
+									<!-- 没有对比商品的展示形式 _start -->
+									<div class="tip-box">
+										<i class="tip-icon"></i>
+										<div class="tip-text">
+											您的对比宝贝什么都没有哦
+											<br>
+											<a class="color" href="">再去看看吧</a>
+										</div>
+									</div>
+									<!-- 没有对比商品的展示形式 _end-->
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!--对比列表 end-->
+
+					<!--对比列表 end-->
+				</div>
+			</div>
+		</div>
+		<!-- 右侧边栏 _end -->
+
+		<!-- 底部 _start-->
+
+		<div class="site-footer">
+
+			<div class="footer-service">
+				<div align="center"><img src="img/test/14778844965714.jpg" alt="" height="85" width="1210"></div>
+			</div>
+
+			<div class="footer-related">
+
+				<div class="footer-article w1210">
+					<dl class="col-article col-article-spe">
+						<dt class="phone color">028-86261949</dt>
+						<dd class="email color">master@itsrouce.cn</dd>
+
+						<dd class="customer">
+							<span>联系我们</span>
+
+							<a href="#" target="_blank">
+								<em class="icon-ww"></em>
+							</a>
+
+							<a href="#" target="_blank">
+								<em class="icon-qq"></em>
+							</a>
+
+						</dd>
+
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>新手上路</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">购物流程</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">订单查询</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">常见问题</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">在线客服</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>支付方式</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">网上支付</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>配送服务</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">配送范围及收费标准</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">订单进度查询</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">验货与签收</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>售后服务</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退换货政策</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退换货流程</a>
+
+						</dd>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">退款说明</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+					<dl class="col-article col-article-first">
+						<dt>商家合作</dt>
+
+						<dd>
+
+							<a rel="nofollow" href="#" target="_blank">商家入驻</a>
+
+						</dd>
+						<!-- -->
+					</dl>
+					<!---->
+
+					<div class="QR-code fr">
+
+						<ul class="tabs">
+
+						</ul>
+						<div class="code-content">
+
+							<div class="code ">
+								<img src="img/test/mall_wx_qrcode_0.jpg">
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="footer-desc-copyright">
+
+				<p class="footer-ecscinfo">
+					<a href="#">首页</a>
+					|
+
+					<a href="#">隐私保护</a>
+					|
+
+					<a href="#">联系我们</a>
+					|
+
+					<a href="#">免责条款</a>
+					|
+
+					<a href="#">公司简介</a>
+					|
+
+					<a href="#">意见反馈</a>
+
+					|
+					<a rel="nofollow" target="_blank" href="#">会员登录</a>
+					|
+					<a rel="nofollow" target="_blank" href="http://bbs.itsource.cn/">会员论坛</a>
+					|
+					<a href="javascript:;" rel="nofollow">客服热线028-86261949</a>
+				</p>
+				<p class="footer-otherlink">
+					<a title="源码商城" target="_blank" href="http://itsource.cn">源码商城</a>
+
+					|
+
+					<a title="菁鱼课堂" target="_blank" href="http://www.itsource.cn">菁鱼课堂</a>
+
+					|
+
+					<a title="资讯速递" target="_blank" href="http://www.itsource.cn">资讯速递</a>
+
+					|
+
+					<a title="快递查询" target="_blank" href="http://m.kuaidi100.com">快递查询</a>
+
+					|
+
+					<a title="论坛" target="_blank" href="http://bbs.itsource.com/forum.php">会员论坛</a>
+
+					|
+
+					<a title="源代码教育咨询有限公司" target="_blank" href="http://www.itsource.cn">源代码教育咨询有限公司</a>
+
+				</p>
+
+				<p class="footer-beian"> ICP备案证书号:
+					<a rel="nofollow" target="_blank" href="#">蜀ICP备88888888号-1</a>
+					<a rel="nofollow" target="_blank" href="#"><i></i>蜀公网安备 45323525326664号</a>
+				</p>
+				<p class="footer-Copyright">Copyright &copy; 2017
+					<a target="_blank" style="margin:0;padding:0;" href="http://www.saodangzu.com/">itsource.cn</a> All Rights Reserved. </p>
+				<p>&nbsp;</p>
+
+				<p class="footer-fp-img">
+					<a target="_blank" href="#"><img src="img/test/kxwz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/smyz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/cxyz.jpg"></a>
+					<a target="_blank" href="#"><img src="img/test/hyyz.png"></a>
+					<a target="_blank" href="#"><img src="img/test/jpfw.png"></a>
+				</p>
+			</div>
+
+		</div>
+
+		<!-- 第三方流量统计 -->
+		<div style="display: none;"></div>
+		<!-- 底部 _end-->
+
+		<script type="text/javascript" src="js/jquery.fly.min.js"></script>
+		<script type="text/javascript" src="js/szy.cart.js"></script>
+		<!--[if lte IE 9]>
+<script type="text/javascript" src="/js/requestAnimationFrame.js"></script>
+<![endif]-->
+		<script type="text/javascript">
+			$().ready(function() {
+				$.cartbox.count = "0";
+				// 缓载图片
+				$("img").lazyload({
+					skip_invisible: false,
+					effect: 'fadeIn',
+					failure_limit: 20,
+					threshold: 200
+				});
+
+			});
+		</script>
+
+	</body>
+
+</html>
