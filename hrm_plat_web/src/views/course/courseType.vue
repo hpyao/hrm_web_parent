@@ -192,7 +192,7 @@
 			},
 			  getEmployees(){
                 //发送请求到后台获取数据
-                  this.$http.patch("/employee") //$.Post(.....)
+                  this.$http.get("/sysmanage/employee/list") //$.Post(.....)
                       .then(result=>{
                           this.employees = result.data;
                       });
